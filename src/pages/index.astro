@@ -2,52 +2,13 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 
 import { getCollection } from "astro:content";
-import BaseHead from "@/components/BaseHead.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import FormattedDate from "@/components/FormattedDate.astro";
 
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
-import type { Post } from "@/interfaces/Post";
 import PostCard from "@/components/PostCard.astro";
 
-const posts = await getCollection("posts");
+const posts = await getCollection('posts')
 ---
 
-<!-- <!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body>
-    <Header />
-    <main>
-      <section>
-        <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <a href={`/posts/${post.id}/`}>
-                  <img
-                    width={720}
-                    height={360}
-                    src={post.data.heroImage}
-                    alt=""
-                  />
-                  <h4 class="title">{post.data.title}</h4>
-                  <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html> -->
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <ul>
     {posts.map((post) => <PostCard post={post} />)}
