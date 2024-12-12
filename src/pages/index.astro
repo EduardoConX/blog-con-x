@@ -6,11 +6,14 @@ import { getCollection } from "astro:content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import PostCard from "@/components/PostCard.astro";
 
-const posts = await getCollection('posts')
+const posts = await getCollection("posts");
+posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <ul>
-    {posts.map((post) => <PostCard post={post} />)}
-  </ul>
+  <section>
+    <ul class="flex flex-col gap-8">
+      {posts.map((post) => <PostCard post={post} />)}
+    </ul>
+  </section>
 </MainLayout>
