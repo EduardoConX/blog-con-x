@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from "astro";
+import { SITE_DESCRIPTION } from "@/consts";
+import PostLayout from "@/layouts/PostLayout.astro";
+import { getCollection } from "astro:content";
+import { Formatter } from "@/utils/formatter";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await post.render();
+---
+
+<PostLayout description={SITE_DESCRIPTION} title={data.title}>
+  <h1 class="text-3xl font-bold text-gray-100 mb-2">{data.title}</h1>
+  <p class="text-gray-400 mb-4">{Formatter.formatDate(data.date)}</p>
+  <Content />
+</PostLayout>
