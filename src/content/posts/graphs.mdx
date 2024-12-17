@@ -1,0 +1,155 @@
+---
+title: Graphs
+description: "A comprehensive guide to graphs, their types, representations, and common operations with examples."
+date: 2024-12-17
+category: data-structures
+---
+
+Graphs are one of the most versatile and widely used data structures in computer science. They model relationships between entities and form the foundation for numerous algorithms in fields like networking, social media analysis, and artificial intelligence.
+
+## What is a Graph?
+
+A **graph** is a collection of:
+- **Vertices (nodes)**: Represent entities in the graph.
+- **Edges (links)**: Represent connections between pairs of vertices.
+
+### Example of a Graph
+
+```plaintext
+    A ---- B
+   / \     |
+  C   D    E
+```
+
+### Key Terminology
+- **Directed Graph**: Edges have a direction (e.g., A → B).
+- **Undirected Graph**: Edges have no direction (e.g., A ↔ B).
+- **Weighted Graph**: Edges have weights (e.g., distances, costs).
+- **Adjacency**: Two vertices are adjacent if they are connected by an edge.
+- **Degree**: Number of edges connected to a vertex.
+
+## Representing Graphs
+
+### 1. Adjacency Matrix
+
+A 2D array where `matrix[i][j] = 1` if there is an edge between vertex `i` and vertex `j` (or a weight for weighted graphs).
+
+```python
+# Example graph: A-B, A-C, C-D
+vertices = ['A', 'B', 'C', 'D']
+matrix = [
+    [0, 1, 1, 0],  # A
+    [1, 0, 0, 0],  # B
+    [1, 0, 0, 1],  # C
+    [0, 0, 1, 0]   # D
+]
+
+```
+
+### 2. Adjacency List
+
+A dictionary where each key is a vertex, and the value is a list of adjacent vertices.
+
+```python
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A'],
+    'C': ['A', 'D'],
+    'D': ['C']
+}
+
+```
+
+## Common Graph Operations
+
+### 1. Depth-First Search (DFS)
+
+Explores as far as possible along each branch before backtracking.
+
+```python
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start, end=' ')
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+# Example usage:
+print("DFS Traversal:")
+dfs(graph, 'A')  # Output: A B C D
+
+```
+
+### 2. Breadth-First Search (BFS)
+
+Explores all neighbors of a vertex before moving to the next level.
+
+```python
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=' ')
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+# Example usage:
+print("BFS Traversal:")
+bfs(graph, 'A')  # Output: A B C D
+
+```
+
+### 3. Detecting Cycles
+
+Check if a graph contains a cycle (repeated paths).
+
+```python
+def has_cycle(graph):
+    visited = set()
+
+    def dfs(vertex, parent):
+        visited.add(vertex)
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                if dfs(neighbor, vertex):
+                    return True
+            elif neighbor != parent:
+                return True
+        return False
+
+    for vertex in graph:
+        if vertex not in visited:
+            if dfs(vertex, None):
+                return True
+    return False
+
+# Example usage:
+print("Cycle Detected:" if has_cycle(graph) else "No Cycle Detected")
+
+```
+
+## Applications of Graphs
+
+1. **Social Networks**: Modeling friendships or connections.
+2. **Navigation Systems**: Representing maps with vertices as locations and edges as roads.
+3. **Recommendation Systems**: Suggesting items based on graph relationships.
+4. **AI and Machine Learning**: Representing decision paths or knowledge bases.
+5. **Computer Networks**: Modeling routers and communication links.
+
+## Advantages and Disadvantages
+
+### Advantages
+- **Versatile**: Can model almost any real-world relationship.
+- **Flexible Representations**: Choice between adjacency list and matrix based on needs.
+
+### Disadvantages
+- **Memory Usage**: Adjacency matrix uses \(O(V^2)\) space.
+- **Complexity**: Operations like shortest path or cycle detection can be computationally expensive.
