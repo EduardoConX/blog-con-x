@@ -5,9 +5,10 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"posts">;
+  category: CollectionEntry<"categories">;
 }
 
-const { post } = Astro.props;
+const { post, category } = Astro.props;
 const url = `/${SUBDOMAIN}posts/${post.slug}`;
 ---
 
@@ -19,7 +20,7 @@ const url = `/${SUBDOMAIN}posts/${post.slug}`;
       </a>
     </h3>
     <p class="mt-1 max-w-2xl text-sm text-gray-400">
-      {Formatter.formatDate(post.data.date)} | {post.data.tags}
+      {Formatter.formatDate(post.data.date)} | {category.data.name}
     </p>
     <p class="mt-2 text-sm text-gray-300">
       {post.data.description}
