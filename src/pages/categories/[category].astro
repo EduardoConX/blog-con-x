@@ -1,7 +1,7 @@
 ---
 import PostCard from "@/components/PostCard.astro";
 import { SITE_DESCRIPTION } from "@/consts";
-import PostLayout from "@/layouts/PostLayout.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 export const getStaticPaths = (async () => {
@@ -22,11 +22,11 @@ export const getStaticPaths = (async () => {
 const { category, posts } = Astro.props;
 ---
 
-<PostLayout description={SITE_DESCRIPTION} title={category.data.name}>
+<MainLayout description={SITE_DESCRIPTION} title={category.data.name}>
   <h1 class="text-3xl font-bold text-gray-100 mb-8">{category.data.name}</h1>
   <section class="md:w-2/3">
     <ul class="flex flex-col gap-8">
       {posts.map((post) => <PostCard post={post} category={category!} />)}
     </ul>
   </section>
-</PostLayout>
+</MainLayout>
