@@ -1,0 +1,49 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, getEntry } from "astro:content";
+
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+import PostCard from "@/components/PostCard.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("posts");
+  posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
+  return paginate(posts, { pageSize: 5 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+const categories = await getCollection("categories");
+---
+
+<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <section>
+    <ul class="flex flex-col gap-8">
+      {
+        page.data.map((post) => {
+          const category = categories.find(
+            (ctg) => ctg.id === post.data.category.id
+          );
+          return <PostCard post={post} category={category!} />;
+        })
+      }
+    </ul>
+  </section>
+  <section class="flex justify-between mt-10">
+    <a href={page.url.prev} class:list={{ disabled: !page.url.prev }}
+      >Previous
+    </a>
+    <a href={page.url.next} class:list={{ disabled: !page.url.next }}>Next</a>
+  </section>
+</MainLayout>
+
+<style>
+  a {
+    @apply bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer;
+  }
+
+  .disabled {
+    @apply bg-gray-500 hover:bg-gray-600;
+  }
+</style>

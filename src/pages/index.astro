@@ -3,12 +3,13 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
 import { getCollection } from "astro:content";
 
-import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+import { SITE_DESCRIPTION, SITE_TITLE, SUBDOMAIN } from "@/consts";
 import PostCard from "@/components/PostCard.astro";
 import CategoriesList from "@/components/CategoriesList.astro";
 
 const posts = await getCollection("posts");
 posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
+const mostRecent = posts.slice(0, 5);
 
 const categories = await getCollection("categories");
 ---
@@ -16,10 +17,10 @@ const categories = await getCollection("categories");
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <h1 class="text-3xl font-bold text-gray-100 mb-8">Recent posts</h1>
   <div class="flex flex-col md:flex-row gap-8">
-    <section class="md:w-2/3">
+    <section class="md:w-2/3 flex flex-col gap-8">
       <ul class="flex flex-col gap-8">
         {
-          posts.map((post) => {
+          mostRecent.map((post) => {
             const category = categories.find(
               (ctg) => ctg.id === post.data.category.id
             );
@@ -27,7 +28,10 @@ const categories = await getCollection("categories");
           })
         }
       </ul>
+      <a href={`/${SUBDOMAIN}1`} class="text-blue-400 hover:text-blue-300 text-xl">
+        See all posts <span aria-hidden="true">&rarr;</span>
+      </a>
     </section>
-    <CategoriesList categories={categories}/>
+    <CategoriesList categories={categories} />
   </div>
 </MainLayout>
