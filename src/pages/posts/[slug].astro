@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import { Formatter } from "@/utils/formatter";
 import { getEntry } from "astro:content";
 
-import '@/styles/posts.css';
+import "@/styles/posts.css";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
@@ -20,11 +20,15 @@ const { post } = Astro.props;
 const { data } = post;
 const { Content } = await post.render();
 
-const category = await getEntry('categories', data.category.id);
+const category = await getEntry("categories", data.category.id);
 ---
 
-<MainLayout description={SITE_DESCRIPTION} title={data.title}>
-  <h1 class="text-3xl font-bold text-gray-100 mb-2">{data.title}</h1>
+<MainLayout
+  description={SITE_DESCRIPTION}
+  siteTitle={data.title}
+  pageTitle={data.title}
+  isPost={true}
+>
   <p class="text-gray-400 mb-4">
     {Formatter.formatDate(data.date)} | {category?.data.name}
   </p>

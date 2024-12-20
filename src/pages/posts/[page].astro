@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 import MainLayout from "@/layouts/MainLayout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
@@ -17,19 +17,21 @@ const { page } = Astro.props;
 const categories = await getCollection("categories");
 ---
 
-<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <section>
-    <ul class="flex flex-col gap-8">
-      {
-        page.data.map((post) => {
-          const category = categories.find(
-            (ctg) => ctg.id === post.data.category.id
-          );
-          return <PostCard post={post} category={category!} />;
-        })
-      }
-    </ul>
-  </section>
+<MainLayout
+  siteTitle={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  pageTitle="All Posts"
+>
+  <ul class="flex flex-col gap-8">
+    {
+      page.data.map((post) => {
+        const category = categories.find(
+          (ctg) => ctg.id === post.data.category.id
+        );
+        return <PostCard post={post} category={category!} />;
+      })
+    }
+  </ul>
   <section class="flex justify-between mt-10">
     <a href={page.url.prev} class:list={{ disabled: !page.url.prev }}
       >Previous
