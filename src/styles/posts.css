@@ -1,9 +1,7 @@
 h2,
-h3,
 p,
-li,
 table {
-  @apply text-white my-5;
+  @apply text-white  my-5;
 }
 
 h1 {
@@ -15,13 +13,21 @@ h2 {
 }
 
 h3 {
-  @apply text-xl;
+  @apply text-xl text-white;
 }
 
-main a {
+section.block h3 {
+  @apply my-5;
+}
+
+section.block a {
   @apply text-white underline;
 }
 
 td {
   @apply py-1 px-2;
+}
+
+li {
+  @apply text-white;
 }
