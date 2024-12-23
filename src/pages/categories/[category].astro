@@ -13,7 +13,9 @@ export const getStaticPaths = (async () => {
   return categories.map((category) => ({
     params: { category: category.id },
     props: {
-      posts: posts.filter((post) => post.data.category.id === category.id),
+      posts: posts
+        .filter((post) => post.data.category.id === category.id)
+        .sort((a, b) => Number(b.data.date) - Number(a.data.date)),
       category: category,
     },
   }));
