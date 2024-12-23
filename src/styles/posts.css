@@ -1,7 +1,8 @@
 h2,
 h3,
 p,
-li {
+li,
+table {
   @apply text-white my-5;
 }
 
@@ -19,4 +20,8 @@ h3 {
 
 main a {
   @apply text-white underline;
+}
+
+td {
+  @apply py-1 px-2;
 }

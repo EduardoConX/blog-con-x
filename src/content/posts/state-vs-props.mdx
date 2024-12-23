@@ -1,0 +1,118 @@
+---
+title: "Differences Between State and Props"
+description: "A clear explanation of the differences, use cases, and best practices for state and props"
+date: 2024-12-23
+category: jsts
+---
+
+When building applications, understanding the distinction between **state** and **props** is crucial. Both are core concepts for managing data, but they serve different purposes.
+
+## What Are Props?
+
+**Props** (short for "properties") are used to pass data from a parent component to its child components. Props are:
+
+- **Read-only**: Immutable and cannot be modified by the child component.
+- **Passed down**: Always passed from parent to child.
+
+### Example
+
+```javascript
+function Greeting(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+function App() {
+  return <Greeting name="Eduardo" />;
+}
+```
+
+In this example, the `Greeting` component receives a `name` prop and displays it.
+
+## What Is State?
+
+**State** represents data that a component manages internally. Unlike props, state is:
+
+- **Mutable**: Can be updated within the component.
+- **Private**: Belongs to the component and is not accessible from outside.
+
+### Example
+
+```javascript
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+In this example, the `Counter` component manages its own `count` state and updates it when the button is clicked.
+
+## Key Differences Between State and Props
+
+| Feature          | Props                  | State                  |
+|------------------|------------------------|------------------------|
+| Mutability       | Immutable              | Mutable                |
+| Ownership        | Passed by parent       | Managed by component   |
+| Accessibility    | Read-only in child     | Private to the component |
+| Use Case         | Pass data between components | Manage internal component data |
+
+## Combining Props and State
+
+In many cases, components use both props and state to manage their behavior. For example:
+
+```javascript
+function Counter({ initialCount }) {
+  const [count, setCount] = useState(initialCount);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  return <Counter initialCount={10} />;
+}
+```
+
+Here:
+- The `initialCount` is passed as a **prop**.
+- The `count` is managed as a **state** within the `Counter` component.
+
+## Best Practices
+
+### Props
+1. Use props for passing static or parent-managed data.
+2. Avoid modifying props within a child component.
+
+### State
+1. Use state for dynamic data that changes over time.
+2. Keep state minimal and localized to the relevant component.
+
+## Common Pitfalls
+
+### 1. Mutating Props
+
+```javascript
+function Child(props) {
+  props.name = "Eduardo"; // ❌ Do not modify props directly
+  return <h1>{props.name}</h1>;
+}
+```
+
+Instead, derive the modified value or pass a callback function to handle updates.
+
+### 2. Overusing State
+
+Avoid placing all data in state; only include what is necessary for rendering the component.
+
+**Note**: While the principles of passing data (props) and managing local state (state) are universal in component-based frameworks, their implementations may differ. Vue and Angular add additional abstraction and tools like built-in reactivity or RxJS, which make them distinct. However, understanding these concepts in one framework makes it easier to learn others.
