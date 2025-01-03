@@ -3,31 +3,27 @@ p,
 table {
   @apply text-white  my-5;
 }
-
 h1 {
   @apply text-3xl font-bold text-white;
 }
-
 h2 {
   @apply text-2xl font-semibold;
 }
-
 h3 {
   @apply text-xl text-white;
 }
-
+h4 {
+  @apply text-lg text-white;
+}
 section.block h3 {
   @apply my-5;
 }
-
 section.block a {
   @apply text-white underline;
 }
-
 td {
   @apply py-1 px-2;
 }
-
 li {
   @apply text-white;
 }
