@@ -27,3 +27,7 @@ td {
 li {
   @apply text-white;
 }
+
+ol li {
+  @apply my-5;
+}
