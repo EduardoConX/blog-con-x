@@ -1,0 +1,183 @@
+---
+title: "Mastering Array Iteration Methods in JavaScript"
+description: "A comprehensive guide to JavaScript array iteration methods, their use cases, and examples."
+date: 2025-01-17
+category: jsts
+---
+
+Array iteration methods are powerful tools in JavaScript that allow developers to traverse and manipulate arrays efficiently. Each method has a unique purpose and behavior, making it essential to choose the right one for specific tasks. This guide explores the most commonly used array iteration methods, their use cases, and practical examples.
+
+## `forEach`
+
+The `forEach` method executes a provided function once for each array element.
+
+### Syntax
+
+```javascript
+array.forEach(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Iterating over an array to perform side effects, such as logging or updating elements.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+numbers.forEach(num => console.log(num));
+// Output: 1, 2, 3, 4, 5
+```
+
+## `map`
+
+The `map` method creates a new array by applying a provided function to each element.
+
+### Syntax
+
+```javascript
+array.map(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Transforming an array into a new one without mutating the original array.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const squared = numbers.map(num => num ** 2);
+console.log(squared);
+// Output: [1, 4, 9, 16, 25]
+```
+
+## `filter`
+
+The `filter` method creates a new array with elements that pass a test implemented by a provided function.
+
+### Syntax
+
+```javascript
+array.filter(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Selecting a subset of elements that meet certain criteria.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const evenNumbers = numbers.filter(num => num % 2 === 0);
+console.log(evenNumbers);
+// Output: [2, 4]
+```
+
+## `reduce`
+
+The `reduce` method executes a reducer function on each element, resulting in a single output value.
+
+### Syntax
+
+```javascript
+array.reduce(callback(accumulator, currentValue, index, array), initialValue);
+```
+
+### Use Case
+- Aggregating values, such as summing elements or flattening arrays.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((acc, num) => acc + num, 0);
+console.log(sum);
+// Output: 15
+```
+
+## `some`
+
+The `some` method tests whether at least one element in the array passes the provided function's test.
+
+### Syntax
+
+```javascript
+array.some(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Checking if any element meets a condition.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const hasEven = numbers.some(num => num % 2 === 0);
+console.log(hasEven);
+// Output: true
+```
+
+## `every`
+
+The `every` method tests whether all elements in the array pass the provided function's test.
+
+### Syntax
+
+```javascript
+array.every(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Ensuring all elements meet a condition.
+
+### Example
+
+```javascript
+const numbers = [2, 4, 6, 8];
+const allEven = numbers.every(num => num % 2 === 0);
+console.log(allEven);
+// Output: true
+```
+
+## `find`
+
+The `find` method returns the first element that satisfies the provided testing function. If no element satisfies the test, `undefined` is returned.
+
+### Syntax
+
+```javascript
+array.find(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Locating a single element based on a condition.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const firstEven = numbers.find(num => num % 2 === 0);
+console.log(firstEven);
+// Output: 2
+```
+
+## `findIndex`
+
+The `findIndex` method returns the index of the first element that satisfies the provided testing function. If no element satisfies the test, `-1` is returned.
+
+### Syntax
+
+```javascript
+array.findIndex(callback(currentValue, index, array), thisArg);
+```
+
+### Use Case
+- Identifying the position of an element that meets a condition.
+
+### Example
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const firstEvenIndex = numbers.findIndex(num => num % 2 === 0);
+console.log(firstEvenIndex);
+// Output: 1
+```
