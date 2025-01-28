@@ -1,15 +1,22 @@
 ---
 title: "Mastering Array Sorting Methods in JavaScript"
-description: "A comprehensive guide to understanding and using JavaScript's array sorting methods."
+description: "An in-depth guide to all JavaScript array sorting methods, including their use cases and examples."
 date: 2025-01-16
 category: jsts
 ---
 
-Sorting is a common task in programming, and JavaScript provides powerful built-in methods to sort arrays efficiently. This guide explores the different ways to sort arrays and offers practical tips to help you master them.
+JavaScript provides several built-in methods for sorting and reversing arrays. Each method serves a unique purpose and has specific behaviors. In this post, we'll cover all JavaScript array sorting and reversing methods, including:
 
-## The `sort()` Method
+- **`sort`**
+- **`reverse`**
+- **`toSorted`**
+- **`toReversed`**
 
-The `sort()` method is the most commonly used method for sorting arrays in JavaScript. It sorts the elements of an array **in place**, modifying the original array, and returns the sorted array.
+---
+
+## `sort`
+
+The `sort` method sorts the elements of an array in place and returns the sorted array. By default, it sorts elements as strings in ascending order.
 
 ### Syntax
 
@@ -17,116 +24,104 @@ The `sort()` method is the most commonly used method for sorting arrays in JavaS
 array.sort(compareFunction);
 ```
 
-### How It Works
+### Use Case
+- Sorting an array of strings or numbers (with a custom comparator for numbers).
 
-- Without a compare function, `sort()` converts array elements to strings and sorts them in ascending order based on Unicode values.
-- With a compare function, you can define custom sorting logic.
-
-### Examples
-
-#### 1. Sorting Numbers
+### Example
 
 ```javascript
-const numbers = [40, 10, 30, 20];
-
-// Default behavior (incorrect for numbers)
+const numbers = [3, 1, 4, 1, 5];
 numbers.sort();
-console.log(numbers); // Output: [10, 20, 30, 40]
+console.log(numbers);
+// Output: [1, 1, 3, 4, 5] (incorrect for numbers without comparator)
 
-// Correct sorting using a compare function
 numbers.sort((a, b) => a - b);
-console.log(numbers); // Output: [10, 20, 30, 40]
+console.log(numbers);
+// Output: [1, 1, 3, 4, 5] (correct for numbers)
 ```
 
-#### 2. Sorting Strings
+## `reverse`
+
+The `reverse` method reverses the order of elements in an array in place.
+
+### Syntax
 
 ```javascript
-const fruits = ["Banana", "Orange", "Apple", "Mango"];
-
-// Default behavior (alphabetical order)
-fruits.sort();
-console.log(fruits); // Output: ["Apple", "Banana", "Mango", "Orange"];
-
-// Reverse alphabetical order
-fruits.sort((a, b) => b.localeCompare(a));
-console.log(fruits); // Output: ["Orange", "Mango", "Banana", "Apple"]
+array.reverse();
 ```
 
-## Stable vs. Unstable Sort
+### Use Case
+- Quickly reversing the order of an array's elements.
 
-As of ECMAScript 2019, JavaScript guarantees a **stable sort** for the `sort()` method. This means that elements with equal values maintain their original order.
+### Example
 
 ```javascript
-const items = [
-  { name: "Apple", quantity: 2 },
-  { name: "Banana", quantity: 2 },
-  { name: "Cherry", quantity: 1 }
-];
+const numbers = [1, 2, 3, 4, 5];
+numbers.reverse();
+console.log(numbers);
+// Output: [5, 4, 3, 2, 1]
+```
+---
 
-items.sort((a, b) => a.quantity - b.quantity);
-console.log(items);
-// Output: [
-//   { name: "Cherry", quantity: 1 },
-//   { name: "Apple", quantity: 2 },
-//   { name: "Banana", quantity: 2 }
-// ]
+## `toSorted`
+
+The `toSorted` method creates a new array with the elements sorted, without mutating the original array. It is a part of modern JavaScript (introduced in ECMAScript 2023).
+
+### Syntax
+
+```javascript
+array.toSorted(compareFunction);
 ```
 
-## Tips for Using `sort()` Effectively
+### Use Case
+- Sorting an array while preserving the original array's order.
 
-1. **Always use a compare function** for numerical sorting to avoid unexpected behavior.
-2. Use `localeCompare` for string sorting in different languages.
-3. Remember that `sort()` modifies the original array. Use `slice()` to create a copy if needed.
-
-## Custom Sorting Use Cases
-
-### 1. Sorting Objects by Key
+### Example
 
 ```javascript
-const users = [
-  { name: "Alice", age: 25 },
-  { name: "Bob", age: 30 },
-  { name: "Charlie", age: 20 }
-];
+const numbers = [3, 1, 4, 1, 5];
+const sortedNumbers = numbers.toSorted((a, b) => a - b);
+console.log(sortedNumbers);
+// Output: [1, 1, 3, 4, 5]
+console.log(numbers);
+// Output: [3, 1, 4, 1, 5] (unchanged)
+```
+---
 
-// Sort by age
-users.sort((a, b) => a.age - b.age);
-console.log(users);
+## `toReversed`
+
+The `toReversed` method creates a new array with the elements reversed, without mutating the original array. It is also part of modern JavaScript (introduced in ECMAScript 2023).
+
+### Syntax
+
+```javascript
+array.toReversed();
 ```
 
-### 2. Sorting in Descending Order
+### Use Case
+- Reversing an array while keeping the original array intact.
+
+### Example
 
 ```javascript
-const numbers = [40, 10, 30, 20];
-
-numbers.sort((a, b) => b - a);
-console.log(numbers); // Output: [40, 30, 20, 10]
+const numbers = [1, 2, 3, 4, 5];
+const reversedNumbers = numbers.toReversed();
+console.log(reversedNumbers);
+// Output: [5, 4, 3, 2, 1]
+console.log(numbers);
+// Output: [1, 2, 3, 4, 5] (unchanged)
 ```
+---
 
-## Alternative Sorting Techniques
+## Combining Methods
 
-Sometimes, you may want to sort arrays without modifying the original. Here are some alternative approaches:
+These methods can be combined to perform complex sorting and reversing tasks efficiently.
 
-### 1. Using `map()` and `sort()`
-
-```javascript
-const numbers = [40, 10, 30, 20];
-
-const sortedNumbers = numbers.slice().sort((a, b) => a - b);
-console.log(sortedNumbers); // Output: [10, 20, 30, 40]
-console.log(numbers); // Original array remains unchanged
-
-```
-
-### 2. Sorting Based on Multiple Criteria
+### Example
 
 ```javascript
-const items = [
-  { name: "Apple", price: 5, rating: 4.5 },
-  { name: "Banana", price: 3, rating: 4.8 },
-  { name: "Cherry", price: 7, rating: 4.5 }
-];
-
-items.sort((a, b) => b.rating - a.rating || a.price - b.price);
-console.log(items);
+const numbers = [3, 1, 4, 1, 5];
+const sortedReversedNumbers = numbers.toSorted((a, b) => a - b).toReversed();
+console.log(sortedReversedNumbers);
+// Output: [5, 4, 3, 1, 1]
 ```
