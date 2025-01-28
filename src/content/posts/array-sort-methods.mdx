@@ -1,0 +1,132 @@
+---
+title: "Mastering Array Sorting Methods in JavaScript"
+description: "A comprehensive guide to understanding and using JavaScript's array sorting methods."
+date: 2025-01-16
+category: jsts
+---
+
+Sorting is a common task in programming, and JavaScript provides powerful built-in methods to sort arrays efficiently. This guide explores the different ways to sort arrays and offers practical tips to help you master them.
+
+## The `sort()` Method
+
+The `sort()` method is the most commonly used method for sorting arrays in JavaScript. It sorts the elements of an array **in place**, modifying the original array, and returns the sorted array.
+
+### Syntax
+
+```javascript
+array.sort(compareFunction);
+```
+
+### How It Works
+
+- Without a compare function, `sort()` converts array elements to strings and sorts them in ascending order based on Unicode values.
+- With a compare function, you can define custom sorting logic.
+
+### Examples
+
+#### 1. Sorting Numbers
+
+```javascript
+const numbers = [40, 10, 30, 20];
+
+// Default behavior (incorrect for numbers)
+numbers.sort();
+console.log(numbers); // Output: [10, 20, 30, 40]
+
+// Correct sorting using a compare function
+numbers.sort((a, b) => a - b);
+console.log(numbers); // Output: [10, 20, 30, 40]
+```
+
+#### 2. Sorting Strings
+
+```javascript
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+// Default behavior (alphabetical order)
+fruits.sort();
+console.log(fruits); // Output: ["Apple", "Banana", "Mango", "Orange"];
+
+// Reverse alphabetical order
+fruits.sort((a, b) => b.localeCompare(a));
+console.log(fruits); // Output: ["Orange", "Mango", "Banana", "Apple"]
+```
+
+## Stable vs. Unstable Sort
+
+As of ECMAScript 2019, JavaScript guarantees a **stable sort** for the `sort()` method. This means that elements with equal values maintain their original order.
+
+```javascript
+const items = [
+  { name: "Apple", quantity: 2 },
+  { name: "Banana", quantity: 2 },
+  { name: "Cherry", quantity: 1 }
+];
+
+items.sort((a, b) => a.quantity - b.quantity);
+console.log(items);
+// Output: [
+//   { name: "Cherry", quantity: 1 },
+//   { name: "Apple", quantity: 2 },
+//   { name: "Banana", quantity: 2 }
+// ]
+```
+
+## Tips for Using `sort()` Effectively
+
+1. **Always use a compare function** for numerical sorting to avoid unexpected behavior.
+2. Use `localeCompare` for string sorting in different languages.
+3. Remember that `sort()` modifies the original array. Use `slice()` to create a copy if needed.
+
+## Custom Sorting Use Cases
+
+### 1. Sorting Objects by Key
+
+```javascript
+const users = [
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 30 },
+  { name: "Charlie", age: 20 }
+];
+
+// Sort by age
+users.sort((a, b) => a.age - b.age);
+console.log(users);
+```
+
+### 2. Sorting in Descending Order
+
+```javascript
+const numbers = [40, 10, 30, 20];
+
+numbers.sort((a, b) => b - a);
+console.log(numbers); // Output: [40, 30, 20, 10]
+```
+
+## Alternative Sorting Techniques
+
+Sometimes, you may want to sort arrays without modifying the original. Here are some alternative approaches:
+
+### 1. Using `map()` and `sort()`
+
+```javascript
+const numbers = [40, 10, 30, 20];
+
+const sortedNumbers = numbers.slice().sort((a, b) => a - b);
+console.log(sortedNumbers); // Output: [10, 20, 30, 40]
+console.log(numbers); // Original array remains unchanged
+
+```
+
+### 2. Sorting Based on Multiple Criteria
+
+```javascript
+const items = [
+  { name: "Apple", price: 5, rating: 4.5 },
+  { name: "Banana", price: 3, rating: 4.8 },
+  { name: "Cherry", price: 7, rating: 4.5 }
+];
+
+items.sort((a, b) => b.rating - a.rating || a.price - b.price);
+console.log(items);
+```
