@@ -17,16 +17,18 @@ const { categories } = Astro.props;
       </h3>
       <ul class="space-y-2">
         {
-          categories.map((category) => (
-            <li>
-              <a
-                href={`/${SUBDOMAIN}categories/${category.id}`}
-                class="text-blue-400 hover:text-blue-300"
-              >
-                {category.data.name}
-              </a>
-            </li>
-          ))
+          categories
+            .sort((a, b) => a.data.name.localeCompare(b.data.name))
+            .map((category) => (
+              <li>
+                <a
+                  href={`/${SUBDOMAIN}categories/${category.id}`}
+                  class="text-blue-400 hover:text-blue-300"
+                >
+                  {category.data.name}
+                </a>
+              </li>
+            ))
         }
       </ul>
     </div>
