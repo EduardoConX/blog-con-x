@@ -30,7 +30,7 @@ onMounted(async () => {
     )
     .map((post) => {
       const category = categories.find(
-        (cat: { id: string }) => cat.id === post.categoryId
+        (cat: { id: string }) => cat.id === post.category.id
       );
       return {
         ...post,
