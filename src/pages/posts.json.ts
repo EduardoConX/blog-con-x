@@ -8,6 +8,7 @@ export async function GET() {
         title: post.data.title,
         description: post.data.description,
         slug: post.slug,
+        categoryId: post.data.category.id,
       }))
     ),
     {
