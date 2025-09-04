@@ -18,9 +18,7 @@ const url = computed(() => `/${SUBDOMAIN}posts/${props.post.slug}`);
         <a :href="url" class="hover:underline"> {{ post.title }} </a>
       </h3>
       <p class="mt-1 max-w-2xl text-sm text-gray-400">
-        <!-- {{ Formatter.formatDate(post.pubDate) }} |  -->{{
-          post.category.name
-        }}
+        {{ Formatter.formatDate(post.pubDate) }} | {{ post.category.name }}
       </p>
       <p class="mt-2 text-sm text-gray-300">{{ post.description }}</p>
       <div class="mt-3">

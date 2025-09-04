@@ -46,5 +46,5 @@ onMounted(async () => {
       <PostCard v-for="post in filteredPosts" :post="post" />
     </ul>
   </div>
-  <p v-else>No posts found</p>
+  <p v-else class="text-gray-100">No posts found</p>
 </template>
