@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-
-interface Post {
-  title: string;
-  description: string;
-  slug: string;
-}
+import PostCard from "./PostCard.vue";
+import { type Post } from "../interfaces/Post";
 
 const posts = ref<Post[]>([]);
 const query = ref("");
@@ -31,15 +27,7 @@ onMounted(async () => {
 <template>
   <div v-if="filteredPosts.length">
     <ul class="flex flex-col gap-8">
-      <li v-for="post in filteredPosts" :key="post.slug" class="mb-4">
-        <a
-          :href="`/posts/${post.slug}`"
-          class="text-blue-400 hover:text-blue-300 text-xl"
-        >
-          {{ post.title }}
-        </a>
-        <p class="text-gray-400">{{ post.description }}</p>
-      </li>
+      <PostCard v-for="post in filteredPosts" :post="post" />
     </ul>
   </div>
   <p v-else>No posts found</p>
