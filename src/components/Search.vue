@@ -13,14 +13,30 @@ onMounted(async () => {
   );
   posts.value = await res.json();
 
+  const res2 = await fetch(
+    "https://eduardoconx.github.io/blog-con-x/categories.json"
+  );
+  const categories = await res2.json();
+
   const params = new URLSearchParams(window.location.search);
   query.value = params.get("q")?.toLowerCase() || "";
-  filteredPosts.value = posts.value.filter(
-    (post: Post) =>
-      post.title.toLowerCase().includes(query.value) ||
-      post.description.toLowerCase().includes(query.value) ||
-      post.slug.toLowerCase().includes(query.value)
-  );
+
+  filteredPosts.value = posts.value
+    .filter(
+      (post: Post) =>
+        post.title.toLowerCase().includes(query.value) ||
+        post.description.toLowerCase().includes(query.value) ||
+        post.slug.toLowerCase().includes(query.value)
+    )
+    .map((post) => {
+      const category = categories.find(
+        (cat: { id: string }) => cat.id === post.categoryId
+      );
+      return {
+        ...post,
+        category: category ? category : { id: "", name: "" },
+      };
+    });
 });
 </script>
 
