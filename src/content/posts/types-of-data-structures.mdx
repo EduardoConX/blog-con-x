@@ -1,0 +1,113 @@
+---
+title: "Types of Data Structures"
+description: "Understand the main types of data structures — linear, non-linear, and hash-based — and how they organize and manage data differently."
+date: 2025-01-26
+category: data-structures
+---
+
+Data structures are the backbone of computer science — they determine how data is stored, organized, and accessed efficiently.  
+They can be broadly classified into three main categories based on how elements are arranged and related to each other.
+
+## 1. Linear Data Structures
+
+In **linear data structures**, elements are arranged in a sequential manner — one after another.  
+Each element is connected to its previous and next element, allowing traversal in a straight line.
+
+### Common Examples
+
+- **Array** → A fixed-size collection of elements stored in contiguous memory.
+- **Linked List** → A collection of nodes, each pointing to the next node.
+- **Stack** → Follows *LIFO* (Last In, First Out) — like a stack of plates.
+- **Queue** → Follows *FIFO* (First In, First Out) — like a waiting line.
+- **Deque** → Double-ended queue, where you can insert or delete from both ends.
+
+### Example
+
+```javascript
+// Stack example (LIFO)
+const stack = [];
+stack.push(1);
+stack.push(2);
+stack.push(3);
+console.log(stack.pop()); // 3
+console.log(stack.pop()); // 2`}
+```
+
+**Key idea:** Data elements are ordered and accessed sequentially.
+
+## 2. Non-Linear Data Structures
+
+In **non-linear data structures**, data elements are not stored sequentially.  
+Each element can connect to multiple others, forming hierarchical or network-like relationships.
+
+### Common Examples
+
+- **Tree** → Represents hierarchical relationships (e.g., folders, organization charts).
+- **Graph** → Represents networks and relationships (e.g., social media connections, maps).
+- **Heap** → A specialized tree structure used in priority queues.
+
+### Example
+
+```javascript
+// Simple tree node
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.children = [];
+  }
+}
+
+const root = new Node("A");
+root.children.push(new Node("B"), new Node("C"));
+root.children[0].children.push(new Node("D"));
+
+/*
+Tree structure:
+    A
+   / \\
+  B   C
+ /
+D
+*/
+```
+
+**Key idea:** Data is connected in multiple directions, not just linearly.
+
+## 3. Hash-Based Data Structures
+
+**Hash-based structures** use a *hash function* to compute an index (or hash code) where data is stored.  
+They provide **fast lookups, insertions, and deletions** — usually in constant time (O(1)).
+
+### Common Examples
+
+- **Hash Table / Hash Map** → Stores key-value pairs.
+- **Set / HashSet** → Stores unique elements for fast existence checks.
+
+### Example
+
+```javascript
+// Hash Map example
+const userAges = new Map();
+userAges.set("Alice", 25);
+userAges.set("Bob", 30);
+
+console.log(userAges.get("Alice")); // 25
+console.log(userAges.has("Charlie")); // false`}
+```
+
+**Key idea:** Uses hashing to quickly locate data using keys.
+
+## Comparison Summary
+
+| Category        | Examples                         | Organization | Common Use Case |
+|-----------------|----------------------------------|---------------|------------------|
+| **Linear**      | Array, Linked List, Stack, Queue | Sequential    | Ordered storage or processing |
+| **Non-Linear**  | Tree, Graph, Heap                | Hierarchical  | Relationships, networks, hierarchies |
+| **Hash-Based**  | Hash Map, Hash Set               | Hashed        | Fast key-based access and lookups |
+
+Understanding the main categories of data structures helps you choose the right one for the problem at hand:
+- Use **linear structures** for ordered data and sequential processing.
+- Use **non-linear structures** for hierarchical or network relationships.
+- Use **hash-based structures** when you need fast, key-based lookups.
+
+Each category offers unique advantages — mastering them is key to writing efficient and scalable code.
