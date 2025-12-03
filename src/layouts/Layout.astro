@@ -1,9 +1,25 @@
 ---
-import Head from "@/components/Head.astro";
-import "../styles/global.css";
+import { getCollection } from "astro:content";
+
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+import Head from "@/components/Head.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import CategoriesList from "@/components/CategoriesList.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const posts = await getCollection("posts");
+posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
+const mostRecent = posts.slice(0, 6);
+
+const categories = await getCollection("categories");
 ---
 
 <!doctype html>
@@ -11,7 +27,57 @@ import Footer from "@/components/Footer.astro";
   <Head title={SITE_TITLE} description={SITE_DESCRIPTION} />
   <body class="min-h-screen bg-background text-foreground">
     <Header />
-    <slot />
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {
+        title && (
+          <section class="mb-12">
+            <div class="text-center space-y-4">
+              <h2 class="text-4xl md:text-5xl font-bold text-balance">
+                {title}
+              </h2>
+              <p class="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+                {description}
+              </p>
+            </div>
+          </section>
+        )
+      }
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <slot />
+        <aside class="lg:col-span-1 space-y-6">
+          <!-- <Card>
+          <CardHeader>
+            <CardTitle class="text-lg">Search</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="relative">
+              <Search
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground"
+              />
+              <Input placeholder="Search articles..." class="pl-10" />
+            </div>
+          </CardContent>
+        </Card> -->
+
+          <CategoriesList categories={categories} posts={posts} />
+
+          {/* Newsletter */}
+          <!-- <Card class="bg-primary/5 border-primary/20">
+          <CardHeader>
+            <CardTitle class="text-lg">Stay Updated</CardTitle>
+            <CardDescription>
+              Get the latest programming tutorials and insights delivered to
+              your inbox.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-3">
+            <Input placeholder="Enter your email" />
+            <Button class="w-full">Subscribe</Button>
+          </CardContent>
+        </Card> -->
+        </aside>
+      </div>
+    </div>
     <Footer />
   </body>
 </html>
