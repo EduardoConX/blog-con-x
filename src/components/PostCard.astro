@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+import UserIcon from "@/icons/UserIcon.astro";
+import CalendarIcon from "@/icons/CalendarIcon.astro";
+import ArrowRightIcon from "@/icons/ArrowRightIcon.astro";
+import { Formatter } from "@/utils/formatter";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  category: CollectionEntry<"categories">;
+}
+
+const { post, category } = Astro.props;
+---
+
+<div
+  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/20"
+>
+  <div
+    class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 space-y-3"
+  >
+    <div class="flex items-center justify-between">
+      <span
+        class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90 text-xs"
+        >{category.data.name}</span
+      ><span class="text-sm text-muted-foreground">8 min read</span>
+    </div>
+    <div
+      class="font-semibold text-xl group-hover:text-primary transition-colors line-clamp-2"
+    >
+      {post.data.title}
+    </div>
+  </div>
+  <div class="px-6 space-y-4">
+    <div class="text-muted-foreground text-base leading-relaxed line-clamp-3">
+      {post.data.description}
+    </div>
+    <div class="flex items-center justify-between pt-2">
+      <div class="flex items-center space-x-2 text-sm text-muted-foreground">
+        <UserIcon />
+        <span>Eduardo Pacheco</span>
+        <CalendarIcon />
+        <span>{Formatter.formatDate(post.data.date)}</span>
+      </div>
+      <a
+        href="/blog/understanding-monotonic-stacks"
+        class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5 text-primary hover:text-primary-foreground hover:bg-primary"
+        >Read more <ArrowRightIcon />
+      </a>
+    </div>
+  </div>
+</div>

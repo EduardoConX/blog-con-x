@@ -1,11 +1,86 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import ArrowRightIcon from "@/icons/ArrowRightIcon.astro";
+import Layout from "../layouts/Layout.astro";
+import PostCard from "@/components/PostCard.astro";
+import { getCollection } from "astro:content";
+import CategoriesList from "@/components/CategoriesList.astro";
+const posts = await getCollection("posts");
+posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
+const mostRecent = posts.slice(0, 6);
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const categories = await getCollection("categories");
 ---
 
 <Layout>
-	<Welcome />
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <section class="mb-12">
+      <div class="text-center space-y-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-balance">
+          Programming Insights & Tutorials
+        </h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+          Dive deep into algorithms, data structures, and modern programming
+          concepts with our comprehensive guides and tutorials.
+        </p>
+      </div>
+    </section>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <main class="lg:col-span-3">
+        <section class="mb-12">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-bold">Most Recent Posts</h3>
+            <button
+              class="px-3 h-8 border inline-flex items-center justify-center gap-1.5 hover:cursor-pointer hover:bg-accent rounded-md"
+              >View All
+              <ArrowRightIcon />
+            </button>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            {
+              mostRecent.map((post) => {
+                const category = categories.find(
+                  (cat) => cat.id === post.data.category.id,
+                );
+                return <PostCard post={post} category={category!} />;
+              })
+            }
+          </div>
+        </section>
+      </main>
+
+      <aside class="lg:col-span-1 space-y-6">
+        <!-- <Card>
+            <CardHeader>
+              <CardTitle class="text-lg">Search</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="relative">
+                <Search
+                  class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground"
+                />
+                <Input placeholder="Search articles..." class="pl-10" />
+              </div>
+            </CardContent>
+          </Card> -->
+
+        <CategoriesList categories={categories} posts={posts} />
+
+        {/* Newsletter */}
+        <!-- <Card class="bg-primary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle class="text-lg">Stay Updated</CardTitle>
+              <CardDescription>
+                Get the latest programming tutorials and insights delivered to
+                your inbox.
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-3">
+              <Input placeholder="Enter your email" />
+              <Button class="w-full">Subscribe</Button>
+            </CardContent>
+          </Card> -->
+      </aside>
+    </div>
+  </div>
 </Layout>
