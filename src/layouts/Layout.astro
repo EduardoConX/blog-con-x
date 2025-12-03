@@ -3,6 +3,7 @@ import Head from "@/components/Head.astro";
 import "../styles/global.css";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 ---
 
 <!doctype html>
@@ -11,5 +12,6 @@ import Header from "@/components/Header.astro";
   <body class="min-h-screen bg-background text-foreground">
     <Header />
     <slot />
+    <Footer />
   </body>
 </html>
