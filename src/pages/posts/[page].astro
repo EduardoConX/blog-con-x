@@ -1,0 +1,67 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import PostCard from "@/components/PostCard.astro";
+import ChevronLeftIcon from "@/icons/ChevronLeftIcon.astro";
+import ChevronRightIcon from "@/icons/ChevronRightIcon.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("posts");
+  posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
+  return paginate(posts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+const categories = await getCollection("categories");
+---
+
+<Layout>
+  <main class="lg:col-span-3">
+    <section class="mb-12">
+      <div class="mb-6">
+        <h2 class="text-3xl md:text-4xl font-bold mb-2">All Posts</h2>
+        <p class="text-muted-foreground">
+          Showing {page.data.length} post{page.data.length !== 1 ? "s" : ""}
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {
+          page.data.map((post) => {
+            const category = categories.find(
+              (cat) => cat.id === post.data.category.id
+            );
+            return <PostCard post={post} category={category!} />;
+          })
+        }
+      </div>
+      <div class="flex items-center justify-center gap-2 mt-8">
+        <a
+          href={page.url.prev || "#"}
+          class="pagination-button"
+          aria-label="Previous page"
+          title={page.url.prev ? "Go to previous page" : "No previous page"}
+          aria-disabled={!page.url.prev}
+        >
+          <ChevronLeftIcon />
+        </a>
+        <a
+          href={page.url.next || "#"}
+          class="pagination-button"
+          aria-label="Next page"
+          title={page.url.next ? "Go to next page" : "No next page"}
+          aria-disabled={!page.url.next}
+        >
+          <ChevronRightIcon />
+        </a>
+
+        <div class="ml-4 text-sm text-muted-foreground">
+          Page {page.currentPage} of {page.lastPage}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
