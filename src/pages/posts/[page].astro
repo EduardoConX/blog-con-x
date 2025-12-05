@@ -4,8 +4,7 @@ import { getCollection } from "astro:content";
 
 import Layout from "@/layouts/Layout.astro";
 import PostCard from "@/components/PostCard.astro";
-import ChevronLeftIcon from "@/icons/ChevronLeftIcon.astro";
-import ChevronRightIcon from "@/icons/ChevronRightIcon.astro";
+import Pagination from "@/components/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("posts");
@@ -38,30 +37,12 @@ const categories = await getCollection("categories");
           })
         }
       </div>
-      <div class="flex items-center justify-center gap-2 mt-8">
-        <a
-          href={page.url.prev || "#"}
-          class="pagination-button"
-          aria-label="Previous page"
-          title={page.url.prev ? "Go to previous page" : "No previous page"}
-          aria-disabled={!page.url.prev}
-        >
-          <ChevronLeftIcon />
-        </a>
-        <a
-          href={page.url.next || "#"}
-          class="pagination-button"
-          aria-label="Next page"
-          title={page.url.next ? "Go to next page" : "No next page"}
-          aria-disabled={!page.url.next}
-        >
-          <ChevronRightIcon />
-        </a>
-
-        <div class="ml-4 text-sm text-muted-foreground">
-          Page {page.currentPage} of {page.lastPage}
-        </div>
-      </div>
+      <Pagination
+        currentPage={page.currentPage}
+        lastPage={page.lastPage}
+        prevUrl={page.url.prev}
+        nextUrl={page.url.next}
+      />
     </section>
   </main>
 </Layout>
