@@ -5,6 +5,7 @@ import AlgorithmsIcon from "@/icons/AlgorithmsIcon.astro";
 import DataStructuresIcon from "@/icons/DataStructuresIcon.astro";
 import JSTSIcon from "@/icons/JSTSIcon.astro";
 import BookIcon from "@/icons/BookIcon.astro";
+import { SUBDOMAIN } from "@/consts";
 
 interface Props {
   categories: CollectionEntry<"categories">[];
@@ -15,7 +16,7 @@ const { categories, posts } = Astro.props;
 
 const categoriesWithCounts = categories.map((category) => {
   const count = posts.filter(
-    (post) => post.data.category.id === category.id,
+    (post) => post.data.category.id === category.id
   ).length;
   return {
     ...category,
@@ -43,7 +44,9 @@ const categoriesWithCounts = categories.map((category) => {
             {(category.id === "architectures" ||
               category.id === "programming-basics") && <BookIcon />}
             <span class="text-sm group-hover:text-primary transition-colors">
-              {category.data.name}
+              <a href={`/${SUBDOMAIN}categories/${category.id}/1`}>
+                {category.data.name}
+              </a>
             </span>
           </div>
           <span
