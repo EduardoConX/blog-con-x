@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import { getEntry } from "astro:content";
+import UserIcon from "@/icons/UserIcon.astro";
+import CalendarIcon from "@/icons/CalendarIcon.astro";
+import { Formatter } from "@/utils/formatter";
+
+import "@/styles/posts.css";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await post.render();
+
+const category = await getEntry("categories", data.category.id);
+---
+
+<Layout>
+  <div class="space-y-4 mb-8">
+    <span
+      class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-primary text-primary-foreground border-transparent"
+      >{category.data.name}</span
+    >
+    <h1 class="text-4xl font-bold text-balance">{data.title}</h1>
+    <div class="flex items-center justify-between pt-4">
+      <div class="flex items-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-1">
+          <UserIcon />
+          <span>Eduardo Pacheco</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <CalendarIcon />
+          <span>{Formatter.formatDate(data.date)}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="space-y-4 text-foreground leading-relaxed">
+    <Content />
+  </section>
+</Layout>
