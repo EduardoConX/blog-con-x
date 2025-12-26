@@ -1,0 +1,23 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SearchComponent from "@/components/Search.vue";
+import { SUBDOMAIN } from "@/consts";
+import ArrowRightIcon from "@/icons/ArrowRightIcon.astro";
+---
+
+<Layout>
+  <main class="lg:col-span-3">
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold">Search results</h3>
+        <a
+          href={`/${SUBDOMAIN}posts/1`}
+          class="px-3 h-8 border inline-flex items-center justify-center gap-1.5 hover:cursor-pointer hover:bg-accent rounded-md"
+          >View All
+          <ArrowRightIcon />
+        </a>
+      </div>
+      <SearchComponent client:load />
+    </section>
+  </main>
+</Layout>
