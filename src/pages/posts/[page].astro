@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 
 import Layout from "@/layouts/Layout.astro";
 import PageTitle from "@/components/PageTitle.astro";
-import GridPosts from "@/components/GridPosts.astro";
+import PostsGrid from "@/components/PostsGrid.astro";
 import Pagination from "@/components/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -25,7 +25,7 @@ const { page } = Astro.props;
         pageSize={page.data.length}
       />
 
-      <GridPosts posts={page.data} />
+      <PostsGrid posts={page.data} />
       <Pagination
         currentPage={page.currentPage}
         lastPage={page.lastPage}

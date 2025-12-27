@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import PageTitle from "@/components/PageTitle.astro";
-import GridPosts from "@/components/GridPosts.astro";
+import PostsGrid from "@/components/PostsGrid.astro";
 const posts = await getCollection("posts");
 posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
 const mostRecent = posts.slice(0, 6);
@@ -15,7 +15,7 @@ const mostRecent = posts.slice(0, 6);
   <main class="lg:col-span-3">
     <section class="mb-12">
       <PageTitle pageTitle="Most Recent Posts" isIndex={true} pageSize={0} />
-      <GridPosts posts={mostRecent} />
+      <PostsGrid posts={mostRecent} />
     </section>
   </main>
 </Layout>
