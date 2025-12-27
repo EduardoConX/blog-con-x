@@ -1,15 +1,11 @@
 ---
-import ArrowRightIcon from "@/icons/ArrowRightIcon.astro";
 import Layout from "@/layouts/Layout.astro";
-import PostCard from "@/components/PostCard.astro";
 import { getCollection } from "astro:content";
-import { SUBDOMAIN } from "@/consts";
 import PageTitle from "@/components/PageTitle.astro";
+import GridPosts from "@/components/GridPosts.astro";
 const posts = await getCollection("posts");
 posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
 const mostRecent = posts.slice(0, 6);
-
-const categories = await getCollection("categories");
 ---
 
 <Layout
@@ -19,16 +15,7 @@ const categories = await getCollection("categories");
   <main class="lg:col-span-3">
     <section class="mb-12">
       <PageTitle pageTitle="Most Recent Posts" isIndex={true} pageSize={0} />
-      <div class="grid gap-6 md:grid-cols-2">
-        {
-          mostRecent.map((post) => {
-            const category = categories.find(
-              (cat) => cat.id === post.data.category.id
-            );
-            return <PostCard post={post} category={category!} />;
-          })
-        }
-      </div>
+      <GridPosts posts={mostRecent} />
     </section>
   </main>
 </Layout>

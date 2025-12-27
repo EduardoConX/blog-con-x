@@ -3,9 +3,9 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
 import Layout from "@/layouts/Layout.astro";
-import PostCard from "@/components/PostCard.astro";
-import Pagination from "@/components/Pagination.astro";
 import PageTitle from "@/components/PageTitle.astro";
+import GridPosts from "@/components/GridPosts.astro";
+import Pagination from "@/components/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const [categories, posts] = await Promise.all([
@@ -37,9 +37,7 @@ const { category, page } = Astro.props;
         isIndex={false}
         pageSize={page.data.length}
       />
-      <div class="grid gap-6 md:grid-cols-2">
-        {page.data.map((post) => <PostCard post={post} category={category} />)}
-      </div>
+      <GridPosts posts={page.data} />
       <Pagination
         currentPage={page.currentPage}
         lastPage={page.lastPage}
