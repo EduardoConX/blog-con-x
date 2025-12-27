@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import PostCard from "@/components/PostCard.astro";
 import Pagination from "@/components/Pagination.astro";
+import PageTitle from "@/components/PageTitle.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const [categories, posts] = await Promise.all([
@@ -31,23 +32,11 @@ const { category, page } = Astro.props;
 <Layout>
   <main class="lg:col-span-3">
     <section class="mb-12">
-      <div class="mb-6">
-        <h2 class="text-3xl md:text-4xl font-bold mb-2">
-          {category.data.name}
-        </h2>
-        {
-          category.data.description && (
-            <p class="text-muted-foreground mb-2">
-              {category.data.description}
-            </p>
-          )
-        }
-        <p class="text-sm text-muted-foreground">
-          Showing {page.data.length} of {
-            page.data.length + (page.lastPage - page.currentPage) * 10
-          } post{page.data.length !== 1 ? "s" : ""}
-        </p>
-      </div>
+      <PageTitle
+        pageTitle={category.data.name}
+        isIndex={false}
+        pageSize={page.data.length}
+      />
       <div class="grid gap-6 md:grid-cols-2">
         {page.data.map((post) => <PostCard post={post} category={category} />)}
       </div>

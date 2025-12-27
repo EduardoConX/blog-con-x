@@ -4,17 +4,31 @@ import ArrowRightIcon from "@/icons/ArrowRightIcon.astro";
 
 interface Props {
   pageTitle: string;
+  isIndex: boolean;
+  pageSize?: number;
 }
 
-const { pageTitle } = Astro.props;
+const { pageTitle, isIndex, pageSize } = Astro.props;
 ---
 
-<div class="flex items-center justify-between mb-6">
-  <h2 class="text-2xl font-bold">{pageTitle}</h2>
-  <a
-    href={`/${SUBDOMAIN}posts/1`}
-    class="px-3 h-8 border inline-flex items-center justify-center gap-1.5 hover:cursor-pointer hover:bg-accent rounded-md"
-    >View All
-    <ArrowRightIcon />
-  </a>
-</div>
+{
+  isIndex ? (
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold">{pageTitle}</h2>
+      <a
+        href={`/${SUBDOMAIN}posts/1`}
+        class="px-3 h-8 border inline-flex items-center justify-center gap-1.5 hover:cursor-pointer hover:bg-accent rounded-md"
+      >
+        View All
+        <ArrowRightIcon />
+      </a>
+    </div>
+  ) : (
+    <div class="mb-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-2">{pageTitle}</h2>
+      <p class="text-muted-foreground">
+        Showing {pageSize} post{pageSize !== 1 ? "s" : ""}
+      </p>
+    </div>
+  )
+}

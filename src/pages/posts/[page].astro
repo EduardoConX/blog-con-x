@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import PostCard from "@/components/PostCard.astro";
 import Pagination from "@/components/Pagination.astro";
+import PageTitle from "@/components/PageTitle.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("posts");
@@ -20,12 +21,11 @@ const categories = await getCollection("categories");
 <Layout>
   <main class="lg:col-span-3">
     <section class="mb-12">
-      <div class="mb-6">
-        <h2 class="text-3xl md:text-4xl font-bold mb-2">All Posts</h2>
-        <p class="text-muted-foreground">
-          Showing {page.data.length} post{page.data.length !== 1 ? "s" : ""}
-        </p>
-      </div>
+      <PageTitle
+        pageTitle="All Posts"
+        isIndex={false}
+        pageSize={page.data.length}
+      />
 
       <div class="grid gap-6 md:grid-cols-2">
         {

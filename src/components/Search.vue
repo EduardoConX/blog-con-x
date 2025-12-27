@@ -25,6 +25,14 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div class="mb-6">
+    <h2 class="text-3xl md:text-4xl font-bold mb-2">Search Results</h2>
+    <p class="text-muted-foreground">
+      Showing {{ filteredPosts.length }} post{{
+        filteredPosts.length !== 1 ? "s" : ""
+      }}
+    </p>
+  </div>
   <div v-if="filteredPosts.length" class="grid gap-6 md:grid-cols-2">
     <PostCard
       v-for="post in filteredPosts"

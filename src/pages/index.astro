@@ -18,7 +18,7 @@ const categories = await getCollection("categories");
 >
   <main class="lg:col-span-3">
     <section class="mb-12">
-      <PageTitle pageTitle="Most Recent Posts" />
+      <PageTitle pageTitle="Most Recent Posts" isIndex={true} pageSize={0} />
       <div class="grid gap-6 md:grid-cols-2">
         {
           mostRecent.map((post) => {
