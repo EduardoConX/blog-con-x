@@ -45,7 +45,7 @@ const url = `/${SUBDOMAIN}posts/${post.slug}`;
         <UserIcon />
         <span>Eduardo Pacheco</span>
         <CalendarIcon />
-        <span>{Formatter.formatDate(post.data.date)}</span>
+        <span>{Formatter.formatDate(post.data.pubDate)}</span>
       </div>
       <a
         href={url}
