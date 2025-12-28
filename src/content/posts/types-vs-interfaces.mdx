@@ -1,0 +1,151 @@
+---
+title: "Types Vs Interfaces in TypeScript"
+description: "Explore the key differences, similarities, and best use cases for types and interfaces in TypeScript."
+date: 2024-12-20
+category: jsts
+---
+
+TypeScript provides two powerful tools for defining the shapes of objects: **types** and **interfaces**. While they share many similarities, there are critical differences that can influence which one to use in specific scenarios.
+
+## Similarities
+
+Both **types** and **interfaces** allow you to define the structure of an object or function.
+
+### Example of an Interface
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+```
+
+### Example of a Type Alias
+
+```typescript
+type User = {
+  id: number;
+  name: string;
+  email: string;
+}
+```
+
+Both examples define a shape for a `User` object, and both can be used interchangeably in many cases:
+
+```typescript
+const user: User = {
+  id: 1,
+  name: "John Doe",
+  email: "john.doe@example.com"
+};
+```
+
+## Key Differences
+
+### 1. Extending and Implementing
+
+- **Interfaces**:
+  - Can be extended using the `extends` keyword.
+  - Can be implemented by classes.
+
+```typescript
+interface Animal {
+  name: string;
+}
+
+interface Dog extends Animal {
+  breed: string;
+}
+
+class GoldenRetriever implements Dog {
+  name = "Buddy";
+  breed = "Golden Retriever";
+}
+```
+
+- **Types**:
+  - Use intersection (`&`) to combine multiple types but cannot be implemented by classes.
+
+```typescript
+type Animal = {
+  name: string;
+};
+
+type Dog = Animal & {
+  breed: string;
+};
+
+const myDog: Dog = {
+  name: "Buddy",
+  breed: "Golden Retriever"
+};
+```
+
+### 2. Declaration Merging
+
+- **Interfaces**:
+  - Can be merged, allowing you to add new properties to an existing interface.
+
+```typescript
+interface User {
+  id: number;
+}
+
+interface User {
+  name: string;
+}
+
+// Merged result:
+// interface User {
+//   id: number;
+//   name: string;
+// }
+
+const user: User = {
+  id: 1,
+  name: "John Doe"
+};
+```
+
+- **Types**:
+  - Cannot be merged. Defining the same type twice results in a compiler error.
+
+```typescript
+type User = {
+  id: number;
+};
+
+type User = {
+  name: string; // Error: Duplicate identifier 'User'
+};
+```
+
+### 3. Usage in Complex Scenarios
+
+- **Interfaces**:
+  - Better suited for defining object shapes and class contracts.
+
+- **Types**:
+  - More flexible, allowing unions, intersections, and primitive types.
+
+```typescript
+type ID = string | number;
+type Callback = () => void;
+
+```
+
+## When to Use What
+
+### Use Interfaces When:
+- You need to define an object shape or a contract for a class.
+- You plan to extend or merge declarations.
+
+### Use Types When:
+- You need more flexibility, such as working with unions or intersections.
+- You want to alias complex types, such as function signatures or tuples.
+
+```typescript
+type Point = [number, number];
+type Comparator = (a: number, b: number) => boolean;
+```

@@ -1,0 +1,103 @@
+---
+title: "Understanding Breadth-First Search (BFS)"
+description: "A deep dive into the BFS algorithm, its applications, and implementations."
+date: 2025-01-20
+category: algorithms
+---
+
+Breadth-First Search (BFS) is a fundamental graph traversal algorithm widely used in computer science. It explores all neighbor nodes at the present depth level before moving on to nodes at the next depth level.
+
+## How BFS Works
+
+BFS works by visiting all nodes at the same level before moving deeper into the graph. This ensures that the shortest path (in an unweighted graph) is found first.
+
+### Steps of BFS:
+1. Start at a given node (source).
+2. Visit all immediate neighbors.
+3. Move to the next level and repeat until all nodes are visited.
+4. Use a **queue** to keep track of nodes to be visited next.
+5. Use a **set** or a **boolean array** to keep track of visited nodes.
+
+## BFS Implementation in JavaScript
+
+```javascript
+function bfs(graph, startNode) {
+  let queue = [startNode];
+  let visited = new Set();
+  visited.add(startNode);
+
+  while (queue.length > 0) {
+    let node = queue.shift(); // Dequeue
+    console.log(node); // Process the node
+
+    for (let neighbor of graph[node]) {
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push(neighbor); // Enqueue
+      }
+    }
+  }
+}
+
+// Example graph as adjacency list
+const graph = {
+  A: ['B', 'C'],
+  B: ['A', 'D', 'E'],
+  C: ['A', 'F', 'G'],
+  D: ['B'],
+  E: ['B', 'H'],
+  F: ['C'],
+  G: ['C'],
+  H: ['E']
+};
+
+bfs(graph, 'A');
+// Expected Output: A B C D E F G H
+```
+
+## BFS on a Binary Tree
+
+BFS is commonly used to traverse binary trees level by level.
+
+```javascript
+class TreeNode {
+  constructor(value) {
+    this.value = value;
+    this.left = this.right = null;
+  }
+}
+
+function bfsBinaryTree(root) {
+  if (!root) return;
+  let queue = [root];
+
+  while (queue.length > 0) {
+    let node = queue.shift();
+    console.log(node.value);
+
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+}
+
+// Example Tree
+const root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(3);
+root.left.left = new TreeNode(4);
+root.left.right = new TreeNode(5);
+
+bfsBinaryTree(root);
+// Expected Output: 1 2 3 4 5
+```
+
+## BFS Use Cases
+BFS is used in many real-world applications, including:
+- **Shortest Path in an Unweighted Graph** (e.g., social networks, navigation systems).
+- **Web Crawlers** (search engines explore links level by level).
+- **Solving Puzzles** (like finding the shortest sequence of moves in a game).
+- **Network Broadcasting** (spreading information efficiently).
+
+## Time and Space Complexity
+- **Time Complexity:** `O(V + E)` (where `V` is vertices and `E` is edges).
+- **Space Complexity:** `O(V)`, since we store visited nodes and a queue.

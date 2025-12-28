@@ -1,0 +1,142 @@
+---
+title: Linked Lists
+description: The basics of linked lists, their types, advantages, and common operations with examples.
+date: 2024-12-12
+category: data-structures
+---
+
+Linked lists are one of the fundamental data structures in computer science. Unlike arrays, linked lists provide flexibility in memory allocation and ease of insertion and deletion operations. They form the backbone of many advanced data structures like stacks, queues, and graphs.
+
+## What is a Linked List?
+
+A **linked list** is a linear data structure where each element, called a **node**, contains two parts:
+
+1. **Data**: The actual value or content.
+2. **Pointer (or Reference)**: A link to the next node in the sequence.
+
+### Example of a Node in Python:
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data  # The data value
+        self.next = None  # Reference to the next node
+```
+
+## Types of Linked Lists
+
+1. **Singly Linked List**: Each node points to the next node, and the last node points to `None`.
+2. **Doubly Linked List**: Each node has two pointers—one to the next node and another to the previous node.
+3. **Circular Linked List**: The last node points back to the first node, forming a circular chain.
+
+### Diagram of Linked Lists:
+
+```plaintext
+Singly Linked List:  [Data|Next] -> [Data|Next] -> [Data|None]
+Doubly Linked List:  None <- [Prev|Data|Next] <-> [Prev|Data|Next] -> None
+Circular Linked List:  [Data|Next] -> [Data|Next] -> [Data|Next] -> (back to first node)
+```
+
+## Why Use Linked Lists?
+
+- **Dynamic Size**: Unlike arrays, linked lists don't require a fixed size during initialization. Nodes can be dynamically added or removed.
+- **Efficient Insertions/Deletions**: Adding or removing elements in a linked list does not require shifting elements as in arrays.
+- **Flexibility**: They allow for efficient memory usage as nodes are allocated as needed.
+
+## Common Operations on Linked Lists
+
+### 1. Traversal
+Visiting each node to access its data:
+
+```python
+def traverse_linked_list(head):
+    current = head
+    while current is not None:
+        print(current.data, end=" -> ")
+        current = current.next
+    print("None")
+
+# Example usage:
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+traverse_linked_list(head)  # Output: 1 -> 2 -> 3 -> None
+```
+
+### 2. Insertion
+Adding a node at the beginning, middle, or end:
+
+```python
+def insert_at_end(head, data):
+    new_node = Node(data)
+    if head is None:
+        return new_node
+    current = head
+    while current.next is not None:
+        current = current.next
+    current.next = new_node
+    return head
+
+# Example usage:
+head = Node(1)
+head = insert_at_end(head, 2)
+head = insert_at_end(head, 3)
+traverse_linked_list(head)  # Output: 1 -> 2 -> 3 -> None
+```
+
+### 3. Deletion
+Removing a node by value:
+
+```python
+def delete_node(head, value):
+    if head is None:
+        return None
+    if head.data == value:
+        return head.next
+    current = head
+    while current.next is not None and current.next.data != value:
+        current = current.next
+    if current.next is not None:
+        current.next = current.next.next
+    return head
+
+# Example usage:
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head = delete_node(head, 2)
+traverse_linked_list(head)  # Output: 1 -> 3 -> None
+```
+
+### 4. Searching
+Finding a node by its value:
+
+```python
+def search_linked_list(head, target):
+    current = head
+    while current is not None:
+        if current.data == target:
+            return True
+        current = current.next
+    return False
+
+# Example usage:
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+print(search_linked_list(head, 2))  # Output: True
+print(search_linked_list(head, 4))  # Output: False
+```
+
+## Advantages and Disadvantages
+
+### Advantages:
+- Dynamic size.
+- Efficient insertions and deletions.
+- Better memory utilization for sparse datasets.
+
+### Disadvantages:
+- No direct access to elements; must traverse the list.
+- Overhead of pointers increases memory usage.
+- More complex implementation compared to arrays.
+

@@ -1,0 +1,96 @@
+---
+title: "Understanding the Difference Between ?? and || in JavaScript"
+description: "Learn when to use the nullish coalescing operator (??) versus the logical OR operator (||) in JavaScript."
+date: 2025-01-04
+category: jsts
+---
+
+In JavaScript, both the `??` (nullish coalescing operator) and `||` (logical OR operator) are used to provide default values. However, they behave differently based on how they treat **falsy** values.
+
+## `||` (Logical OR Operator)
+
+The `||` operator returns the **first truthy value** or the last value if all are falsy. In JavaScript, a **falsy value** includes:
+
+- `false`
+- `0`
+- `''` (empty string)
+- `null`
+- `undefined`
+- `NaN`
+
+### Example:
+
+```javascript
+let value = 0 || 'default';
+console.log(value); // Output: 'default'
+```
+
+In this case, `0` is a falsy value, so the `||` operator skips it and returns `'default'`.
+
+## `??` (Nullish Coalescing Operator)
+
+The `??` operator returns the **right-hand value only if the left-hand value is `null` or `undefined`**. It does **not** treat other falsy values (e.g., `0`, `''`) as nullish.
+
+### Example:
+
+```javascript
+let value = 0 ?? 'default';
+console.log(value); // Output: 0
+```
+
+Here, `0` is not `null` or `undefined`, so the `??` operator keeps it.
+
+## Key Difference
+
+The primary difference lies in how they handle **falsy values**:
+
+- **`||`**: Treats all falsy values (`false`, `0`, `''`, etc.) as triggers to return the right-hand value.
+- **`??`**: Only considers `null` or `undefined` as triggers to return the right-hand value.
+
+## When to Use `||` vs. `??`
+
+### Use **`||`** for Any Falsy Value
+
+If you want to provide a fallback for any falsy value, use `||`:
+
+```javascript
+let userInput = ''; // An empty string (falsy)
+let output = userInput || 'Default Value';
+console.log(output); // Output: 'Default Value'
+```
+
+### Use **`??`** for Nullish Values Only
+
+If you specifically want to handle `null` or `undefined` without overriding other falsy values, use `??`:
+
+```javascript
+let userInput = ''; // An empty string (not nullish)
+let output = userInput ?? 'Default Value';
+console.log(output); // Output: ''
+```
+
+## Practical Scenarios
+
+### Using `||`:
+
+```javascript
+function getConfig(option) {
+  return option || 'default-config';
+}
+
+console.log(getConfig(false)); // Output: 'default-config'
+console.log(getConfig(null));  // Output: 'default-config'
+console.log(getConfig(''));    // Output: 'default-config'
+```
+
+### Using `??`:
+
+```javascript
+function getConfig(option) {
+  return option ?? 'default-config';
+}
+
+console.log(getConfig(false)); // Output: false
+console.log(getConfig(null));  // Output: 'default-config'
+console.log(getConfig(''));    // Output: ''
+```

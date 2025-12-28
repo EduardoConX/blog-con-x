@@ -1,0 +1,142 @@
+---
+title: "Static Methods"
+description: "What static methods are, their characteristics, and use cases across different programming languages."
+date: 2025-01-03
+category: programming-basics
+---
+
+Static methods are a fundamental concept in object-oriented programming. Unlike instance methods, static methods are associated with a class rather than any particular instance of that class.
+
+## What Are Static Methods?
+
+Static methods are functions defined within a class, but they don’t operate on an instance of that class. Instead, they are called directly on the class itself.
+
+### Characteristics of Static Methods
+
+- **Class-Level Scope**: Static methods belong to the class, not to any instance.
+- **No Access to Instance Members**: They cannot directly access instance variables or instance methods unless explicitly passed as parameters.
+- **Utility Functions**: Often used for operations that don’t depend on instance-specific data.
+- **Invoked on the Class**: Called directly on the class rather than through an object.
+
+## Static Methods in JavaScript
+
+In JavaScript, the `static` keyword is used to define static methods. Here’s an example:
+
+```javascript
+class MathUtils {
+  static add(a, b) {
+    return a + b;
+  }
+
+  static subtract(a, b) {
+    return a - b;
+  }
+}
+
+// Usage
+console.log(MathUtils.add(5, 3)); // Output: 8
+console.log(MathUtils.subtract(5, 3)); // Output: 2
+
+```
+
+### Key Points in JavaScript
+- Static methods are not accessible on class instances:
+
+```javascript
+const utils = new MathUtils();
+console.log(utils.add(5, 3)); // Error: add is not a function
+
+```
+
+- They are often used for utility or helper functions.
+
+## Static Methods in Other Languages
+
+### Java
+
+In Java, static methods are defined using the `static` keyword:
+
+```java
+public class MathUtils {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+}
+
+// Usage
+System.out.println(MathUtils.add(5, 3)); // Output: 8
+
+```
+
+### Python
+
+Python achieves static methods using the `@staticmethod` decorator:
+
+```python
+class MathUtils:
+    @staticmethod
+    def add(a, b):
+        return a + b
+
+# Usage
+print(MathUtils.add(5, 3))  # Output: 8
+
+```
+
+### C#
+
+C# uses the `static` keyword in a similar manner to Java:
+
+```csharp
+public class MathUtils {
+    public static int Add(int a, int b) {
+        return a + b;
+    }
+}
+
+// Usage
+Console.WriteLine(MathUtils.Add(5, 3)); // Output: 8
+
+```
+
+## Common Use Cases for Static Methods
+
+1. **Utility Functions**: For example, mathematical operations, string manipulations, or validation logic.
+
+```javascript
+class StringUtils {
+  static isPalindrome(str) {
+    const reversed = str.split('').reverse().join('');
+    return str === reversed;
+  }
+}
+
+console.log(StringUtils.isPalindrome('radar')); // Output: true
+
+```
+
+2. **Factory Methods**: Used to create and return objects with specific properties.
+
+```javascript
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  static createGuest() {
+    return new User('Guest', 0);
+  }
+}
+
+const guest = User.createGuest();
+console.log(guest); // Output: User { name: 'Guest', age: 0 }
+
+```
+
+3. **Shared State or Constants**: Provide a way to manage state or constants shared across the application.
+
+## Limitations of Static Methods
+
+- **No Polymorphism**: Static methods cannot be overridden because they are not tied to an instance.
+- **Limited Flexibility**: They cannot access or modify instance-specific data directly.

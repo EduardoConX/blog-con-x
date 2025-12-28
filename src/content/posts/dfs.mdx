@@ -1,0 +1,82 @@
+---
+title: "Understanding Depth-First Search (DFS)"
+description: "A deep dive into the DFS algorithm, its applications, and implementations."
+date: 2025-01-21
+category: algorithms
+---
+
+Depth-First Search (DFS) is a fundamental graph traversal algorithm used to explore nodes and edges of a graph or tree. It follows a deep traversal approach, going as far as possible along one branch before backtracking.
+
+## How DFS Works
+
+DFS uses a **stack** (explicitly or via recursion) to track visited nodes and explore deeper paths before moving to adjacent nodes.
+
+### Steps of DFS:
+1. Start at a chosen node (root for trees, any node for graphs).
+2. Mark the node as visited.
+3. Recursively visit all unvisited adjacent nodes.
+4. Backtrack when no unvisited adjacent nodes remain.
+
+## DFS Implementation in JavaScript
+
+### Recursive Approach
+
+```javascript
+function dfsRecursive(graph, node, visited = new Set()) {
+  if (visited.has(node)) return;
+  
+  console.log(node); // Process node
+  visited.add(node);
+  
+  for (const neighbor of graph[node]) {
+    dfsRecursive(graph, neighbor, visited);
+  }
+}
+
+const graph = {
+  A: ['B', 'C'],
+  B: ['D', 'E'],
+  C: ['F'],
+  D: [],
+  E: ['F'],
+  F: []
+};
+
+dfsRecursive(graph, 'A');
+// Expected Output: A B D E F C
+```
+
+### Iterative Approach (Using Stack)
+
+```javascript
+function dfsIterative(graph, start) {
+  const stack = [start];
+  const visited = new Set();
+  
+  while (stack.length > 0) {
+    const node = stack.pop();
+    
+    if (!visited.has(node)) {
+      console.log(node); // Process node
+      visited.add(node);
+      
+      for (const neighbor of graph[node].reverse()) {
+        stack.push(neighbor);
+      }
+    }
+  }
+}
+
+dfsIterative(graph, 'A');
+// Expected Output: A B D E F C
+```
+
+## DFS Use Cases
+- **Pathfinding** (e.g., solving mazes)
+- **Cycle detection** in graphs
+- **Topological sorting**
+- **Solving puzzles** (e.g., Sudoku, backtracking problems)
+
+## Time and Space Complexity
+- **Time Complexity**: `O(V + E)` - Visits every vertex and edge once.
+- **Space Complexity**: `O(V)` - Requires space proportional to the number of vertices.

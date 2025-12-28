@@ -1,0 +1,161 @@
+---
+title: "Understanding Sets in JavaScript"
+description: "Learn about Sets in JavaScript, their features, and practical use cases."
+date: 2025-01-07
+category: jsts
+---
+
+Sets are a built-in data structure introduced in ES6 (ECMAScript 2015) that allow you to store unique values of any type, whether primitive values or object references. Unlike arrays, Sets automatically ensure that there are no duplicate elements.
+
+## Creating a Set
+
+You can create a Set using the `Set` constructor.
+
+```javascript
+// Creating a new Set
+const mySet = new Set();
+
+// Adding values to the Set
+mySet.add(1);
+mySet.add(2);
+mySet.add(2); // Duplicate value, won't be added
+
+console.log(mySet); // Output: Set { 1, 2 }
+```
+
+You can also initialize a Set with an array or any iterable.
+
+```javascript
+const mySet = new Set([1, 2, 3, 3]);
+console.log(mySet); // Output: Set { 1, 2, 3 }
+
+```
+
+## Key Features of Sets
+
+1. **Unique Values**: Sets automatically filter out duplicate entries.
+2. **Order of Elements**: Elements are stored in the order they are added.
+3. **Iterability**: Sets are iterable, allowing you to loop through their elements.
+4. **Dynamic Size**: The size of a Set can be retrieved using the `size` property.
+
+## Common Set Methods
+
+### Adding and Removing Elements
+
+```javascript
+const mySet = new Set();
+
+// Adding elements
+mySet.add(10);
+mySet.add(20);
+
+// Removing elements
+mySet.delete(10);
+console.log(mySet); // Output: Set { 20 }
+
+// Checking for an element
+console.log(mySet.has(20)); // Output: true
+console.log(mySet.has(10)); // Output: false
+
+```
+
+### Clearing the Set
+
+```javascript
+const mySet = new Set([1, 2, 3]);
+mySet.clear();
+console.log(mySet); // Output: Set {}
+
+```
+
+### Getting the Size of a Set
+
+```javascript
+const mySet = new Set([1, 2, 3]);
+console.log(mySet.size); // Output: 3
+
+```
+
+## Iterating Over a Set
+
+You can iterate over the elements of a Set using methods like `forEach`, `for...of`, or the spread operator.
+
+```javascript
+const mySet = new Set(["a", "b", "c"]);
+
+// Using forEach
+mySet.forEach(value => console.log(value));
+
+// Using for...of
+for (const value of mySet) {
+    console.log(value);
+}
+
+// Using the spread operator
+console.log([...mySet]); // Output: ["a", "b", "c"]
+
+```
+
+## Practical Use Cases
+
+### 1. Removing Duplicates from an Array
+
+```javascript
+const numbers = [1, 2, 2, 3, 4, 4, 5];
+const uniqueNumbers = [...new Set(numbers)];
+console.log(uniqueNumbers); // Output: [1, 2, 3, 4, 5]
+
+```
+
+### 2. Checking for Unique Values
+
+```javascript
+const hasDuplicates = (array) => new Set(array).size !== array.length;
+
+console.log(hasDuplicates([1, 2, 3, 4])); // Output: false
+console.log(hasDuplicates([1, 2, 2, 4])); // Output: true
+
+```
+
+### 3. Performing Set Operations
+
+While JavaScript does not provide built-in methods for set operations like union, intersection, and difference, you can implement them manually.
+
+#### Union
+
+```javascript
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+
+const union = new Set([...setA, ...setB]);
+console.log(union); // Output: Set { 1, 2, 3, 4, 5 }
+
+```
+
+#### Intersection
+
+```javascript
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+
+const intersection = new Set([...setA].filter(x => setB.has(x)));
+console.log(intersection); // Output: Set { 3 }
+
+```
+
+#### Difference
+
+```javascript
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+
+const difference = new Set([...setA].filter(x => !setB.has(x)));
+console.log(difference); // Output: Set { 1, 2 }
+
+```
+
+## Limitations of Sets
+
+1. Sets do not support indexing; you cannot access elements by index.
+2. There are no direct methods to update a specific value in a Set.
+3. Sets are not suitable for scenarios where duplicates are required.
