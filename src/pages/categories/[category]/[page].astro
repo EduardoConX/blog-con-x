@@ -16,7 +16,7 @@ export const getStaticPaths = (async ({ paginate }) => {
   return categories.flatMap((category) => {
     const categoryPosts = posts
       .filter((post) => post.data.category.id === category.id)
-      .sort((a, b) => Number(b.data.date) - Number(a.data.date));
+      .sort((a, b) => Number(b.data.pubDate) - Number(a.data.pubDate));
 
     return paginate(categoryPosts, {
       params: { category: category.id },
