@@ -1,15 +1,16 @@
----
-import { SITE_TITLE } from "@/consts";
-
-const today = new Date();
----
-
-<footer class="bg-gray-800 text-gray-300 py-4 sm:py-6">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <div class="mb-4 md:mb-0">
-        <p>&copy; {today.getFullYear()} {SITE_TITLE}. All rights reserved.</p>
-      </div>
+<footer class="border-t border-border bg-muted/30 mt-16">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div>
+      <h3 class="font-bold text-lg mb-4">Blog Con X</h3>
+      <p class="text-muted-foreground text-sm leading-relaxed">
+        Your go-to resource for programming tutorials, algorithm explanations,
+        and software development insights.
+      </p>
+    </div>
+    <div class="border-t border-border mt-8 pt-8 text-center">
+      <p class="text-muted-foreground text-sm">
+        © {new Date().getFullYear()} Blog Con X. All rights reserved.
+      </p>
     </div>
   </div>
 </footer>

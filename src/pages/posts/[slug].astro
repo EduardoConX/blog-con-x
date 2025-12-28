@@ -1,10 +1,11 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { SITE_DESCRIPTION } from "@/consts";
-import MainLayout from "@/layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
-import { Formatter } from "@/utils/formatter";
+import Layout from "@/layouts/Layout.astro";
 import { getEntry } from "astro:content";
+import UserIcon from "@/icons/UserIcon.astro";
+import CalendarIcon from "@/icons/CalendarIcon.astro";
+import { Formatter } from "@/utils/formatter";
 
 import "@/styles/posts.css";
 
@@ -23,14 +24,27 @@ const { Content } = await post.render();
 const category = await getEntry("categories", data.category.id);
 ---
 
-<MainLayout
-  description={SITE_DESCRIPTION}
-  siteTitle={data.title}
-  pageTitle={data.title}
-  isPost={true}
->
-  <p class="text-gray-400 mb-4">
-    {Formatter.formatDate(data.date)} | {category?.data.name}
-  </p>
-  <Content />
-</MainLayout>
+<Layout>
+  <div class="space-y-4 mb-8">
+    <span
+      class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-primary text-primary-foreground border-transparent"
+      >{category!.data.name}</span
+    >
+    <h1 class="text-4xl font-bold text-balance">{data.title}</h1>
+    <div class="flex items-center justify-between pt-4">
+      <div class="flex items-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-1">
+          <UserIcon />
+          <span>Eduardo Pacheco</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <CalendarIcon />
+          <span>{Formatter.formatDate(data.pubDate)}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="space-y-4 text-foreground leading-relaxed">
+    <Content />
+  </section>
+</Layout>

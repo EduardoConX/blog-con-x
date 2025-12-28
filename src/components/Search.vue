@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import PostCard from "./PostCard.vue";
-import { type Post } from "../interfaces/Post";
+import type { Post } from "@/interfaces/Post";
 
 const posts = ref<Post[]>([]);
 const query = ref("");
@@ -13,38 +13,32 @@ onMounted(async () => {
   );
   posts.value = await res.json();
 
-  const res2 = await fetch(
-    "https://eduardoconx.github.io/blog-con-x/categories.json"
-  );
-  const categories = await res2.json();
-
   const params = new URLSearchParams(window.location.search);
   query.value = params.get("q")?.toLowerCase() || "";
-
-  filteredPosts.value = posts.value
-    .filter(
-      (post: Post) =>
-        post.title.toLowerCase().includes(query.value) ||
-        post.description.toLowerCase().includes(query.value) ||
-        post.slug.toLowerCase().includes(query.value)
-    )
-    .map((post) => {
-      const category = categories.find(
-        (cat: { id: string }) => cat.id === post.category.id
-      );
-      return {
-        ...post,
-        category: category ? category : { id: "", name: "" },
-      };
-    });
+  filteredPosts.value = posts.value.filter(
+    (post: Post) =>
+      post.title.toLowerCase().includes(query.value) ||
+      post.description.toLowerCase().includes(query.value) ||
+      post.slug.toLowerCase().includes(query.value)
+  );
 });
 </script>
 
 <template>
-  <div v-if="filteredPosts.length">
-    <ul class="flex flex-col gap-8">
-      <PostCard v-for="post in filteredPosts" :post="post" />
-    </ul>
+  <div class="mb-6">
+    <h2 class="text-3xl md:text-4xl font-bold mb-2">Search Results</h2>
+    <p class="text-muted-foreground">
+      Showing {{ filteredPosts.length }} post{{
+        filteredPosts.length !== 1 ? "s" : ""
+      }}
+    </p>
   </div>
-  <p v-else class="text-gray-100">No posts found</p>
+  <div v-if="filteredPosts.length" class="grid gap-6 md:grid-cols-2">
+    <PostCard
+      v-for="post in filteredPosts"
+      :post="post"
+      category="Algorithms"
+    />
+  </div>
+  <p v-else>No posts found</p>
 </template>

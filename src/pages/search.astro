@@ -1,20 +1,12 @@
 ---
-import MainLayout from "@/layouts/MainLayout.astro";
+import Layout from "@/layouts/Layout.astro";
 import SearchComponent from "@/components/Search.vue";
-
-import { SITE_DESCRIPTION, SITE_TITLE, SUBDOMAIN } from "@/consts";
 ---
 
-<MainLayout
-  siteTitle={SITE_TITLE}
-  description={SITE_DESCRIPTION}
-  pageTitle="Search results"
->
-  <SearchComponent client:load />
-  <a
-    href={`/${SUBDOMAIN}posts/1`}
-    class="text-blue-400 hover:text-blue-300 text-xl"
-  >
-    See all posts <span aria-hidden="true">&rarr;</span>
-  </a>
-</MainLayout>
+<Layout>
+  <main class="lg:col-span-3">
+    <section class="mb-12">
+      <SearchComponent client:load />
+    </section>
+  </main>
+</Layout>

@@ -1,37 +1,21 @@
 ---
-import MainLayout from "@/layouts/MainLayout.astro";
-
+import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
-
-import { SITE_DESCRIPTION, SITE_TITLE, SUBDOMAIN } from "@/consts";
-import PostCard from "@/components/PostCard.astro";
-
+import PageTitle from "@/components/PageTitle.astro";
+import PostsGrid from "@/components/PostsGrid.astro";
 const posts = await getCollection("posts");
-posts.sort((a, b) => Number(b.data.date) - Number(a.data.date));
-const mostRecent = posts.slice(0, 5);
-
-const categories = await getCollection("categories");
+posts.sort((a, b) => Number(b.data.pubDate) - Number(a.data.pubDate));
+const mostRecent = posts.slice(0, 6);
 ---
 
-<MainLayout
-  siteTitle={SITE_TITLE}
-  description={SITE_DESCRIPTION}
-  pageTitle="Most Recent Posts"
+<Layout
+  title="Programming Insights & Tutorials"
+  description="Dive deep into algorithms, data structures, and modern programming concepts with our comprehensive guides and tutorials."
 >
-  <ul class="flex flex-col gap-8">
-    {
-      mostRecent.map((post) => {
-        const category = categories.find(
-          (ctg) => ctg.id === post.data.category.id
-        );
-        return <PostCard post={post} category={category!} />;
-      })
-    }
-  </ul>
-  <a
-    href={`/${SUBDOMAIN}posts/1`}
-    class="text-blue-400 hover:text-blue-300 text-xl"
-  >
-    See all posts <span aria-hidden="true">&rarr;</span>
-  </a>
-</MainLayout>
+  <main class="lg:col-span-3">
+    <section class="mb-12">
+      <PageTitle pageTitle="Most Recent Posts" isIndex={true} pageSize={0} />
+      <PostsGrid posts={mostRecent} />
+    </section>
+  </main>
+</Layout>

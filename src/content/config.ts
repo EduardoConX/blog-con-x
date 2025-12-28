@@ -4,9 +4,9 @@ const posts = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
-    date: z.date(),
+    pubDate: z.date(),
     description: z.string(),
-    category: reference('categories'),
+    category: reference("categories"),
   }),
 });
 
@@ -17,4 +17,4 @@ const categories = defineCollection({
   }),
 });
 
-export const collections = { posts, categories  };
+export const collections = { posts, categories };
