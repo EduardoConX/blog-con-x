@@ -3,6 +3,9 @@ import { computed } from "vue";
 import { SUBDOMAIN } from "@/consts";
 import { type Post } from "../interfaces/Post";
 import { Formatter } from "@/utils/formatter";
+import UserIcon from "@/icons/UserIcon.vue";
+import CalendarIcon from "@/icons/CalendarIcon.vue";
+import ArrowRightIcon from "@/icons/ArrowRightIcon.vue";
 
 const props = defineProps<{
   post: Post;
