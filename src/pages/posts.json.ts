@@ -9,7 +9,7 @@ export async function GET() {
         description: post.data.description,
         pubDate: post.data.pubDate,
         slug: post.slug,
-        body: post.body,
+        readingTime: Math.ceil(post.body.split(" ").length / 200),
         category: post.data.category,
       }))
     ),

@@ -3,7 +3,7 @@ export interface Post {
   description: string;
   pubDate: Date;
   slug: string;
-  body: string;
+  readingTime: number;
   category: {
     id: string;
   };
