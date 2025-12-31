@@ -12,10 +12,8 @@ const mostRecent = posts.slice(0, 6);
   title="Programming Insights & Tutorials"
   description="Dive deep into algorithms, data structures, and modern programming concepts with our comprehensive guides and tutorials."
 >
-  <main class="lg:col-span-3">
-    <section class="mb-12">
-      <PageTitle pageTitle="Most Recent Posts" isIndex={true} pageSize={0} />
-      <PostsGrid posts={mostRecent} />
-    </section>
-  </main>
+  <section class="mb-12">
+    <PageTitle pageTitle="Most Recent Posts" isIndex={true} pageSize={0} />
+    <PostsGrid posts={mostRecent} />
+  </section>
 </Layout>

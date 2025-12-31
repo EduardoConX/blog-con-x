@@ -30,20 +30,18 @@ const { category, page } = Astro.props;
 ---
 
 <Layout>
-  <main class="lg:col-span-3">
-    <section class="mb-12">
-      <PageTitle
-        pageTitle={category.data.name}
-        isIndex={false}
-        pageSize={page.data.length}
-      />
-      <PostsGrid posts={page.data} />
-      <Pagination
-        currentPage={page.currentPage}
-        lastPage={page.lastPage}
-        prevUrl={page.url.prev}
-        nextUrl={page.url.next}
-      />
-    </section>
-  </main>
+  <section class="mb-12">
+    <PageTitle
+      pageTitle={category.data.name}
+      isIndex={false}
+      pageSize={page.data.length}
+    />
+    <PostsGrid posts={page.data} />
+    <Pagination
+      currentPage={page.currentPage}
+      lastPage={page.lastPage}
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+    />
+  </section>
 </Layout>
