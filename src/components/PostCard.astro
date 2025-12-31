@@ -4,6 +4,7 @@ import UserIcon from "@/icons/UserIcon.astro";
 import CalendarIcon from "@/icons/CalendarIcon.astro";
 import ArrowRightIcon from "@/icons/ArrowRightIcon.astro";
 import { Formatter } from "@/utils/formatter";
+import { getReadingTime } from "@/utils/utils";
 import { SUBDOMAIN } from "@/consts";
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 
 const { post, category } = Astro.props;
 const url = `/${SUBDOMAIN}posts/${post.slug}`;
-const readingTime = Math.ceil(post.body.split(" ").length / 200);
+const readingTime = getReadingTime(post.body);
 ---
 
 <div
