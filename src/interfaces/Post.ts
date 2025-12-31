@@ -3,6 +3,7 @@ export interface Post {
   description: string;
   pubDate: Date;
   slug: string;
+  body: string;
   category: {
     id: string;
   };

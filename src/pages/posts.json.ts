@@ -9,6 +9,7 @@ export async function GET() {
         description: post.data.description,
         pubDate: post.data.pubDate,
         slug: post.slug,
+        body: post.body,
         category: post.data.category,
       }))
     ),

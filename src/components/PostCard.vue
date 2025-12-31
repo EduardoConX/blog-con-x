@@ -13,6 +13,9 @@ const props = defineProps<{
 }>();
 
 const url = computed(() => `/${SUBDOMAIN}posts/${props.post.slug}`);
+const readingTime = computed(() =>
+  Math.ceil(props.post.body.split(" ").length / 200)
+);
 </script>
 
 <template>
@@ -24,7 +27,9 @@ const url = computed(() => `/${SUBDOMAIN}posts/${props.post.slug}`);
         <span
           class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 gap-1 overflow-hidden border-transparent bg-secondary text-secondary-foreground text-xs"
           >{{ props.category }}</span
-        ><span class="text-sm text-muted-foreground">8 min read</span>
+        ><span class="text-sm text-muted-foreground"
+          >{{ readingTime }} min read</span
+        >
       </div>
 
       <a :href="url">
