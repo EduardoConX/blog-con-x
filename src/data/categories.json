@@ -1,0 +1,7 @@
+[
+  { "id": "algorithms", "name": "Algorithms" },
+  { "id": "architectures", "name": "Architectures" },
+  { "id": "data-structures", "name": "Data Structures" },
+  { "id": "js-ts", "name": "JavaScript / TypeScript" },
+  { "id": "programming-basics", "name": "Programming Basics" }
+]

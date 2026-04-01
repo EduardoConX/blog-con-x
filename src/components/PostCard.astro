@@ -13,8 +13,8 @@ interface Props {
 }
 
 const { post, category } = Astro.props;
-const url = `/${SUBDOMAIN}posts/${post.slug}`;
-const readingTime = getReadingTime(post.body);
+const url = `/${SUBDOMAIN}posts/${post.data.slug}`;
+const readingTime = getReadingTime(post.body || "");
 ---
 
 <div

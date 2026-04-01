@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import { getEntry } from "astro:content";
 import UserIcon from "@/icons/UserIcon.astro";
@@ -13,17 +13,17 @@ import { getReadingTime } from "@/utils/utils";
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.data.slug },
     props: { post },
   }));
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
 const { data } = post;
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const category = await getEntry("categories", data.category.id);
-const readingTime = getReadingTime(post.body);
+const readingTime = getReadingTime(post.body || "");
 ---
 
 <Layout>
