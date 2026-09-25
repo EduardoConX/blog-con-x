@@ -1,0 +1,174 @@
+---
+title: "Prim's Algorithm Explained"
+slug: "prims-algorithm"
+description: "A complete guide to Prim’s Minimum Spanning Tree (MST) algorithm, how it works, and an implementation in JavaScript."
+pubDate: 2025-12-02
+category: algorithms
+---
+
+**Prim’s Algorithm** is a classic greedy algorithm used to find the **Minimum Spanning Tree (MST)** of a connected, undirected, weighted graph.
+
+An MST connects all vertices with the **minimum total edge weight** and without forming cycles.
+
+If your graph represents things like networks, roads, pipes, or fiber routes, Prim's algorithm helps build the cheapest system connecting all nodes.
+
+## What Is a Minimum Spanning Tree?
+
+Given a graph:
+
+- All nodes must be connected  
+- No cycles allowed  
+- Total weight of all edges must be **minimal**
+
+Prim’s algorithm grows this tree *one edge at a time*, always choosing the **cheapest possible connection** to an unvisited node.
+
+## How Prim’s Algorithm Works
+
+Prim's algorithm is a **greedy** algorithm that:
+
+1. Starts from any node  
+2. Chooses the *smallest* edge that connects the current tree to a new node  
+3. Adds that edge to the MST  
+4. Repeats until all nodes are included
+
+## Visualization Idea
+
+Imagine cities connected by roads with tolls.  
+Prim's algorithm builds the **cheapest road network** connecting all cities without creating unnecessary loops.
+
+## Prim’s Algorithm Example Implementation (JavaScript)
+
+This implementation uses an adjacency list and a priority queue.
+
+```javascript
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+  
+  push(val) {
+    this.heap.push(val);
+    this.bubbleUp();
+  }
+
+  pop() {
+    if (this.heap.length === 1) return this.heap.pop();
+    const top = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.bubbleDown();
+    return top;
+  }
+
+  bubbleUp() {
+    let idx = this.heap.length - 1;
+    while (idx > 0) {
+      let parent = Math.floor((idx - 1) / 2);
+      if (this.heap[parent][0] <= this.heap[idx][0]) break;
+      [this.heap[parent], this.heap[idx]] = [this.heap[idx], this.heap[parent]];
+      idx = parent;
+    }
+  }
+
+  bubbleDown() {
+    let idx = 0;
+    const length = this.heap.length;
+
+    while (true) {
+      let left = idx * 2 + 1;
+      let right = idx * 2 + 2;
+      let smallest = idx;
+
+      if (left < length && this.heap[left][0] < this.heap[smallest][0]) {
+        smallest = left;
+      }
+
+      if (right < length && this.heap[right][0] < this.heap[smallest][0]) {
+        smallest = right;
+      }
+
+      if (smallest === idx) break;
+
+      [this.heap[idx], this.heap[smallest]] = [this.heap[smallest], this.heap[idx]];
+      idx = smallest;
+    }
+  }
+
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+}
+
+function primMST(graph, start = 0) {
+  const visited = new Set();
+  const minHeap = new MinHeap();
+  let mstWeight = 0;
+
+  // [weight, node]
+  minHeap.push([0, start]);
+
+  while (!minHeap.isEmpty()) {
+    const [weight, node] = minHeap.pop();
+    if (visited.has(node)) continue;
+
+    visited.add(node);
+    mstWeight += weight;
+
+    for (const [neighbor, edgeWeight] of graph[node]) {
+      if (!visited.has(neighbor)) {
+        minHeap.push([edgeWeight, neighbor]);
+      }
+    }
+  }
+
+  return mstWeight;
+}
+
+// Example graph (adjacency list)
+const graph = {
+  0: [[1, 4], [2, 3]],
+  1: [[0, 4], [2, 1], [3, 2]],
+  2: [[0, 3], [1, 1], [3, 4]],
+  3: [[1, 2], [2, 4]]
+};
+
+console.log(primMST(graph, 0));
+
+// Expected Output:
+// 7
+// (Edges chosen: 2-1, 1-3, 0-2)
+```
+
+## Why Prim’s Algorithm Works
+
+Prim's always picks the **cheapest available edge** that connects the growing tree to an unvisited node.  
+Because no decisions contradict each other, the greedy choice always leads to a valid MST.
+
+## Time and Space Complexity
+
+| Data Structure | Time Complexity |
+|----------------|----------------|
+| Adjacency Matrix + No Heap | **O(V²)** |
+| Adjacency List + Min-Heap | **O(E log V)** |
+
+Space Complexity: **O(V + E)**
+
+Prim’s algorithm becomes efficient when combined with a min-heap.
+
+## Kruskal vs Prim
+
+| Feature | Prim’s Algorithm | Kruskal’s Algorithm |
+|--------|-------------------|----------------------|
+| Approach | Grows MST one vertex at a time | Sorts edges globally |
+| Best For | Dense graphs | Sparse graphs |
+| Data Structure | Priority Queue | Union-Find |
+| Cycle Prevention | Implicit (via visited set) | Explicit (via DSU) |
+
+If the graph is **dense**, Prim is usually faster.  
+If the graph is **sparse**, Kruskal is often simpler.
+
+## When to Use Prim’s Algorithm
+
+When the graph is dense  
+When you want to grow the MST progressively  
+When adjacency lists are available  
+When the starting point matters (Prim requires a start, though any node works)
