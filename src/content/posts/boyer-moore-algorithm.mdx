@@ -1,0 +1,91 @@
+---
+title: "The Boyer-Moore Majority Vote Algorithm Explained"
+slug: "boyer-moore-algorithm"
+description: "Learn how the Boyer-Moore Majority Vote algorithm efficiently finds the majority element in an array using linear time and constant space."
+pubDate: 2025-10-17
+category: algorithms
+---
+
+The **Boyer-Moore Majority Vote Algorithm** is a clever algorithm used to find the **majority element** in a sequence — that is, the element that appears **more than n/2 times** in an array (if it exists).  
+
+It’s efficient because it only requires **one pass through the array (O(n))** and **constant extra space (O(1))**.
+
+## The Idea Behind the Algorithm
+
+The algorithm works in **two main phases**:
+
+1. **Find a Candidate**  
+   It scans through the array and keeps track of a potential candidate for the majority element along with a counter.  
+   - If the counter is 0, the current element becomes the new candidate.  
+   - If the current element equals the candidate, the counter increases.  
+   - Otherwise, the counter decreases.
+
+2. **Verify the Candidate**  
+   After one pass, the candidate may be the majority element — but we must verify it by counting its actual occurrences.
+
+## Implementation in JavaScript
+
+```javascript
+function majorityElement(nums) {
+  let candidate = null;
+  let count = 0;
+
+  // Phase 1: Find a potential candidate
+  for (const num of nums) {
+    if (count === 0) {
+      candidate = num;
+    }
+    count += (num === candidate) ? 1 : -1;
+  }
+
+  // Phase 2: Verify the candidate
+  count = 0;
+  for (const num of nums) {
+    if (num === candidate) count++;
+  }
+
+  return count > Math.floor(nums.length / 2) ? candidate : null;
+}
+
+// Example usage
+console.log(majorityElement([3, 2, 3]));        // Output: 3
+console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); // Output: 2
+console.log(majorityElement([1, 2, 3, 4]));    // Output: null`}
+```
+
+## Why It Works
+
+Think of it as a **voting system**:
+- Every time you see the same number as your current candidate, it gains a vote.  
+- Every different number “votes against” it.  
+- A true majority element will always “survive” to the end because it has more than half the total votes.
+
+## Time and Space Complexity
+
+| Operation | Complexity |
+|------------|-------------|
+| **Time** | O(n) — single pass (plus one verification pass) |
+| **Space** | O(1) — no extra storage needed |
+
+## Example Walkthrough
+
+Array: `[2, 2, 1, 1, 1, 2, 2]`
+
+| Step | Element | Candidate | Count |
+|------|----------|-----------|--------|
+| 1 | 2 | 2 | 1 |
+| 2 | 2 | 2 | 2 |
+| 3 | 1 | 2 | 1 |
+| 4 | 1 | 2 | 0 |
+| 5 | 1 | 1 | 1 |
+| 6 | 2 | 1 | 0 |
+| 7 | 2 | 2 | 1 |
+
+✅ Final candidate: **2**  
+Verification confirms it appears more than `n/2` times → **Majority element = 2**
+
+## Common Use Cases
+
+- Finding majority votes in polls or surveys  
+- Detecting dominant values in large datasets  
+- Simplifying majority detection problems in interviews (common LeetCode question)
