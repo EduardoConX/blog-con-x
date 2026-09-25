@@ -13,5 +13,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx(), sitemap()]
+  integrations: [mdx(), sitemap()],
+  site: "https://eduardoconx.github.io",
+  base: "/blog-con-x",
 });
