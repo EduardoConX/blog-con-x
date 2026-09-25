@@ -1,0 +1,38 @@
+---
+import ChevronLeftIcon from "@/icons/ChevronLeftIcon.astro";
+import ChevronRightIcon from "@/icons/ChevronRightIcon.astro";
+
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  prevUrl?: string;
+  nextUrl?: string;
+}
+
+const { currentPage, lastPage, prevUrl, nextUrl } = Astro.props;
+---
+
+<div class="flex items-center justify-center gap-2 mt-8">
+  <a
+    href={prevUrl || "#"}
+    class="pagination-button"
+    aria-label="Previous page"
+    title={prevUrl ? "Go to previous page" : "No previous page"}
+    aria-disabled={!prevUrl}
+  >
+    <ChevronLeftIcon />
+  </a>
+  <a
+    href={nextUrl || "#"}
+    class="pagination-button"
+    aria-label="Next page"
+    title={nextUrl ? "Go to next page" : "No next page"}
+    aria-disabled={!nextUrl}
+  >
+    <ChevronRightIcon />
+  </a>
+
+  <div class="ml-4 text-sm text-muted-foreground">
+    Page {currentPage} of {lastPage}
+  </div>
+</div>

@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+h2 {
+  @apply text-2xl font-bold mt-6 mb-3;
+}
+ul {
+  @apply list-disc list-inside space-y-2 ml-2;
+}

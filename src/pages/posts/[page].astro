@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import PageTitle from "@/components/PageTitle.astro";
+import PostsGrid from "@/components/PostsGrid.astro";
+import Pagination from "@/components/Pagination.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("posts");
+  posts.sort((a, b) => Number(b.data.pubDate) - Number(a.data.pubDate));
+  return paginate(posts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout>
+  <section class="mb-12">
+    <PageTitle
+      pageTitle="All Posts"
+      isIndex={false}
+      pageSize={page.data.length}
+    />
+
+    <PostsGrid posts={page.data} />
+    <Pagination
+      currentPage={page.currentPage}
+      lastPage={page.lastPage}
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+    />
+  </section>
+</Layout>

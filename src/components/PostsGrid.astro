@@ -1,0 +1,24 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import PostCard from "./PostCard.astro";
+
+const categories = await getCollection("categories");
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="grid gap-6 md:grid-cols-2">
+  {
+    posts.map((post) => {
+      const category = categories.find(
+        (cat) => cat.id === post.data.category.id
+      );
+      return <PostCard post={post} category={category!} />;
+    })
+  }
+</div>
