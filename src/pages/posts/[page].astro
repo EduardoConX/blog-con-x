@@ -16,7 +16,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout>
+<Layout
+  metaTitle="All Posts | Blog Con X"
+  metaDescription="Browse programming articles on Blog Con X."
+>
   <section class="mb-12">
     <PageTitle
       pageTitle="All Posts"

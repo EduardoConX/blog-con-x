@@ -29,7 +29,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { category, page } = Astro.props;
 ---
 
-<Layout>
+<Layout
+  metaTitle={`${category.data.name} | Blog Con X`}
+  metaDescription={`Articles about ${category.data.name} on Blog Con X.`}
+>
   <section class="mb-12">
     <PageTitle
       pageTitle={category.data.name}

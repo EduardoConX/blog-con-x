@@ -3,7 +3,10 @@ import Layout from "@/layouts/Layout.astro";
 import SearchComponent from "@/components/Search.vue";
 ---
 
-<Layout>
+<Layout
+  metaTitle="Search | Blog Con X"
+  metaDescription="Search programming articles on Blog Con X."
+>
   <section class="mb-12">
     <SearchComponent client:load />
   </section>
