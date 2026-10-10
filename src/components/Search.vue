@@ -8,9 +8,9 @@ const query = ref("");
 const filteredPosts = ref<Post[]>([]);
 
 onMounted(async () => {
-  const res = await fetch(
-    "https://eduardoconx.github.io/blog-con-x/posts.json"
-  );
+  const res = await fetch("https://eduardoconx.dev/blog-con-x/posts.json");
+
+  console.log(res);
   posts.value = await res.json();
 
   const params = new URLSearchParams(window.location.search);
@@ -19,7 +19,7 @@ onMounted(async () => {
     (post: Post) =>
       post.title.toLowerCase().includes(query.value) ||
       post.description.toLowerCase().includes(query.value) ||
-      post.slug.toLowerCase().includes(query.value)
+      post.slug.toLowerCase().includes(query.value),
   );
 });
 </script>
