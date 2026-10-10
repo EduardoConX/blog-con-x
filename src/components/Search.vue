@@ -8,9 +8,11 @@ const query = ref("");
 const filteredPosts = ref<Post[]>([]);
 
 onMounted(async () => {
-  const res = await fetch("https://eduardoconx.dev/blog-con-x/posts.json");
+  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`;
+  const res = await fetch(`${baseUrl}posts.json`);
 
-  console.log(res);
   posts.value = await res.json();
 
   const params = new URLSearchParams(window.location.search);
