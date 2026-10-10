@@ -37,7 +37,7 @@ onMounted(async () => {
     <PostCard
       v-for="post in filteredPosts"
       :post="post"
-      category="Algorithms"
+      :category="post.categoryName"
     />
   </div>
   <p v-else>No posts found</p>

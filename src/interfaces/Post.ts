@@ -4,6 +4,7 @@ export interface Post {
   pubDate: Date;
   slug: string;
   readingTime: number;
+  categoryName: string;
   category: {
     id: string;
   };
