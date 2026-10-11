@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "vitest run tests/unit",
+    "test:site": "pnpm build && vitest run tests/site.test.ts",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -24,5 +26,8 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "vitest": "^5.0.3"
   }
 }

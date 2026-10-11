@@ -2,27 +2,20 @@
 import { onMounted, ref } from "vue";
 import PostCard from "./PostCard.vue";
 import type { Post } from "@/interfaces/Post";
+import { filterPosts, getPostsUrl } from "../utils/search";
 
 const posts = ref<Post[]>([]);
 const query = ref("");
 const filteredPosts = ref<Post[]>([]);
 
 onMounted(async () => {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-  const res = await fetch(`${baseUrl}posts.json`);
+  const res = await fetch(getPostsUrl(import.meta.env.BASE_URL));
 
   posts.value = await res.json();
 
   const params = new URLSearchParams(window.location.search);
   query.value = params.get("q")?.toLowerCase() || "";
-  filteredPosts.value = posts.value.filter(
-    (post: Post) =>
-      post.title.toLowerCase().includes(query.value) ||
-      post.description.toLowerCase().includes(query.value) ||
-      post.slug.toLowerCase().includes(query.value),
-  );
+  filteredPosts.value = filterPosts(posts.value, query.value);
 });
 </script>
 
