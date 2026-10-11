@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import PostCard from "./PostCard.astro";
+import PostCard from "./PostCard.vue";
+import type { Post } from "@/interfaces/Post";
+import { getReadingTime } from "@/utils/utils";
 
 const categories = await getCollection("categories");
 
@@ -18,7 +20,16 @@ const { posts } = Astro.props;
       const category = categories.find(
         (cat) => cat.id === post.data.category.id
       );
-      return <PostCard post={post} category={category!} />;
+        const cardPost: Post = {
+          title: post.data.title,
+          description: post.data.description,
+          pubDate: post.data.pubDate,
+          slug: post.data.slug,
+          readingTime: getReadingTime(post.body || ""),
+          categoryName: category?.data.name ?? post.data.category.id,
+          category: post.data.category,
+        };
+        return <PostCard post={cardPost} />;
     })
   }
 </div>

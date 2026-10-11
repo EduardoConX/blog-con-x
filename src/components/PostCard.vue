@@ -9,7 +9,6 @@ import ArrowRightIcon from "@/icons/ArrowRightIcon.vue";
 
 const props = defineProps<{
   post: Post;
-  category: string;
 }>();
 
 const url = computed(() => `/${SUBDOMAIN}posts/${props.post.slug}`);
@@ -23,7 +22,7 @@ const url = computed(() => `/${SUBDOMAIN}posts/${props.post.slug}`);
       <div class="flex items-center justify-between">
         <span
           class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 gap-1 overflow-hidden border-transparent bg-secondary text-secondary-foreground text-xs"
-          >{{ props.category }}</span
+          >{{ props.post.categoryName }}</span
         ><span class="text-sm text-muted-foreground"
           >{{ post.readingTime }} min read</span
         >
